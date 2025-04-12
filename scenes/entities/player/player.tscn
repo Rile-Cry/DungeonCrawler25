@@ -1,10 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://bi65u4cbgluxp"]
+[gd_scene load_steps=6 format=3 uid="uid://bi65u4cbgluxp"]
+
+[ext_resource type="Script" uid="uid://bctgl8dm64tv6" path="res://utility/state_machine/state_machine.gd" id="1_1hmtu"]
+[ext_resource type="Script" uid="uid://c3jgie06mlnjx" path="res://scenes/entities/player/player.gd" id="1_635qg"]
+[ext_resource type="Script" uid="uid://cxewitvx48gvd" path="res://gameplay/states/player_states/idle_state.gd" id="3_58kc7"]
+[ext_resource type="Script" uid="uid://bqs7oj55vm05x" path="res://gameplay/states/player_states/moving_state.gd" id="4_nh4ur"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_yel1f"]
 
 [node name="Player" type="Node3D"]
+script = ExtResource("1_635qg")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_yel1f")
 
 [node name="Camera3D" type="Camera3D" parent="."]
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("1_1hmtu")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_58kc7")
+
+[node name="Moving" type="Node" parent="StateMachine"]
+script = ExtResource("4_nh4ur")
