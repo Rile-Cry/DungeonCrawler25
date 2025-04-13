@@ -1,5 +1,5 @@
 extends ActionLeaf
 
 func tick(actor,blackboard) -> int :
-	#actor.step_forward()
+	actor.advance()
 	return SUCCESS

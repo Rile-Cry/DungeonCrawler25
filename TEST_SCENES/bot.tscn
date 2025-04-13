@@ -1,12 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://d1xg47mwvifgq"]
+[gd_scene load_steps=13 format=3 uid="uid://d1xg47mwvifgq"]
 
 [ext_resource type="Script" uid="uid://cqgodvllic4t4" path="res://TEST_SCENES/bot.gd" id="1_lckyo"]
 [ext_resource type="Script" uid="uid://dlv1p0py4ns6r" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_vb233"]
-[ext_resource type="Script" uid="uid://cbrc0485abmbt" path="res://addons/beehave/nodes/composites/simple_parallel.gd" id="3_tgl1r"]
 [ext_resource type="Script" uid="uid://d0ygkruu1ks2i" path="res://addons/beehave/nodes/composites/sequence.gd" id="4_8bj0o"]
 [ext_resource type="Script" uid="uid://kxocmynflx4m" path="res://TEST_SCENES/wall_check.gd" id="4_8tawa"]
 [ext_resource type="Script" uid="uid://be5sn77trq4fc" path="res://addons/beehave/nodes/leaves/action.gd" id="4_n6ybn"]
 [ext_resource type="Script" uid="uid://dyoi70t5iwbve" path="res://TEST_SCENES/advance.gd" id="4_tgl1r"]
+[ext_resource type="Script" uid="uid://dtiri2elww666" path="res://addons/beehave/nodes/composites/selector_random.gd" id="5_n6ybn"]
+[ext_resource type="Script" uid="uid://ryxw8csr1ghq" path="res://TEST_SCENES/turn_left.gd" id="6_tgl1r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lckyo"]
 
@@ -39,29 +40,33 @@ blackboard = NodePath("@Node@103901")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://dlv1p0py4ns6r"
 
-[node name="ParallelSelector" type="Node" parent="BeehaveTree"]
-script = ExtResource("3_tgl1r")
-metadata/_custom_type_script = "uid://cbrc0485abmbt"
-
-[node name="Idle" type="Node" parent="BeehaveTree/ParallelSelector"]
-script = ExtResource("4_n6ybn")
-metadata/_custom_type_script = "uid://be5sn77trq4fc"
-
-[node name="Move" type="Node" parent="BeehaveTree/ParallelSelector"]
+[node name="Move" type="Node" parent="BeehaveTree"]
 script = ExtResource("4_8bj0o")
 metadata/_custom_type_script = "uid://d0ygkruu1ks2i"
 
-[node name="Advance" type="Node" parent="BeehaveTree/ParallelSelector/Move"]
+[node name="CheckFront" type="Node" parent="BeehaveTree/Move"]
+script = ExtResource("4_8bj0o")
+metadata/_custom_type_script = "uid://d0ygkruu1ks2i"
+
+[node name="WallCheck" type="Node" parent="BeehaveTree/Move/CheckFront"]
+script = ExtResource("4_8tawa")
+metadata/_custom_type_script = "uid://b304hy13pl4vr"
+
+[node name="SelectorRandomComposite" type="Node" parent="BeehaveTree/Move/CheckFront"]
+script = ExtResource("5_n6ybn")
+metadata/_custom_type_script = "uid://dtiri2elww666"
+
+[node name="TurnLeft" type="Node" parent="BeehaveTree/Move/CheckFront/SelectorRandomComposite"]
+script = ExtResource("6_tgl1r")
+metadata/_custom_type_script = "uid://be5sn77trq4fc"
+
+[node name="Advance" type="Node" parent="BeehaveTree/Move"]
 script = ExtResource("4_tgl1r")
 metadata/_custom_type_script = "uid://be5sn77trq4fc"
 
-[node name="WallCheckSequence" type="Node" parent="BeehaveTree/ParallelSelector/Move"]
-script = ExtResource("4_8bj0o")
-metadata/_custom_type_script = "uid://d0ygkruu1ks2i"
-
-[node name="WallCheck" type="Node" parent="BeehaveTree/ParallelSelector/Move/WallCheckSequence"]
-script = ExtResource("4_8tawa")
-metadata/_custom_type_script = "uid://b304hy13pl4vr"
+[node name="Idle" type="Node" parent="BeehaveTree/Move"]
+script = ExtResource("4_n6ybn")
+metadata/_custom_type_script = "uid://be5sn77trq4fc"
 
 [node name="RayDar" type="Node3D" parent="."]
 
