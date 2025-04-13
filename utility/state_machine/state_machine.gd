@@ -2,7 +2,7 @@ class_name StateMachine extends Node
 
 @export var initial_state: State = null
 
-@onready var state: State = (func get_initial_state() -> State:
+@onready var state: State = (func () -> State:
 	return initial_state if initial_state != null else get_child(0)
 ).call()
 
