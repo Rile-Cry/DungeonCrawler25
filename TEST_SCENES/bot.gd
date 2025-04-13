@@ -29,6 +29,21 @@ func advance() -> void:
 
 func tween_translate(new_pos:Vector3) -> void:
 	var tween = get_tree().create_tween().bind_node(self).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT_IN)
-	tween.tween_property(self,"position",new_pos,3)
+	tween.tween_property(self,"position",new_pos,4)
 	await tween.finished
 	pass
+
+func tween_rotate(new_dir:Vector3)-> void:
+	
+	var tween = get_tree().create_tween().bind_node(self).set_ease(Tween.EASE_IN_OUT)
+	
+	## 90 == LEFT, 180 == BACK, -90 == RIGHT
+	match new_dir:
+		Vector3.LEFT:
+			tween.tween_property(self,"rotation_degrees:y",90,1)
+		Vector3.RIGHT:
+			tween.tween_property(self,"rotation_degrees:y",-90,1)
+		Vector3.BACK:
+			tween.tween_property(self,"rotation_degrees:y",180,1)
+		_: print("couldn't turn")
+	await tween.finished
