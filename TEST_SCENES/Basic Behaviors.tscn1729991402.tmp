@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://opxkc2vhs2v0"]
+
+[ext_resource type="PackedScene" uid="uid://d1xg47mwvifgq" path="res://TEST_SCENES/bot.tscn" id="1_8jqo6"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m74h1"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8jqo6"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_8jqo6"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5kfji"]
+size = Vector2(10, 10)
+subdivide_width = 9
+subdivide_depth = 9
+
+[node name="BasicBehaviors" type="Node3D"]
+
+[node name="Bot" parent="." instance=ExtResource("1_8jqo6")]
+physics_material_override = SubResource("PhysicsMaterial_m74h1")
+gravity_scale = 1.0
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+disable_mode = 1
+physics_material_override = SubResource("PhysicsMaterial_8jqo6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_8jqo6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("PlaneMesh_5kfji")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-3.78552e-08, -0.5, 0.866025, -2.18557e-08, 0.866025, 0.5, -1, 0, -4.37114e-08, 5.33041, 2.26621, 0)

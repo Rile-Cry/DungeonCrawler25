@@ -1,0 +1,94 @@
+[gd_scene load_steps=12 format=3 uid="uid://d1xg47mwvifgq"]
+
+[ext_resource type="Script" uid="uid://cqgodvllic4t4" path="res://TEST_SCENES/bot.gd" id="1_lckyo"]
+[ext_resource type="Script" uid="uid://dlv1p0py4ns6r" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_vb233"]
+[ext_resource type="Script" uid="uid://cbrc0485abmbt" path="res://addons/beehave/nodes/composites/simple_parallel.gd" id="3_tgl1r"]
+[ext_resource type="Script" uid="uid://d0ygkruu1ks2i" path="res://addons/beehave/nodes/composites/sequence.gd" id="4_8bj0o"]
+[ext_resource type="Script" uid="uid://kxocmynflx4m" path="res://TEST_SCENES/wall_check.gd" id="4_8tawa"]
+[ext_resource type="Script" uid="uid://be5sn77trq4fc" path="res://addons/beehave/nodes/leaves/action.gd" id="4_n6ybn"]
+[ext_resource type="Script" uid="uid://dyoi70t5iwbve" path="res://TEST_SCENES/advance.gd" id="4_tgl1r"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lckyo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n18ty"]
+albedo_color = Color(0.584847, 0.0558272, 0.102077, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b5eeu"]
+material = SubResource("StandardMaterial3D_n18ty")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mhd46"]
+
+[node name="Bot" type="RigidBody3D" node_paths=PackedStringArray("ray_box")]
+gravity_scale = 0.0
+script = ExtResource("1_lckyo")
+ray_box = NodePath("RayDar")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_lckyo")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_b5eeu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_mhd46")
+debug_color = Color(0.92549, 0, 0.368627, 1)
+
+[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("1_vb233")
+actor_node_path = NodePath("..")
+blackboard = NodePath("@Node@103901")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://dlv1p0py4ns6r"
+
+[node name="ParallelSelector" type="Node" parent="BeehaveTree"]
+script = ExtResource("3_tgl1r")
+metadata/_custom_type_script = "uid://cbrc0485abmbt"
+
+[node name="Idle" type="Node" parent="BeehaveTree/ParallelSelector"]
+script = ExtResource("4_n6ybn")
+metadata/_custom_type_script = "uid://be5sn77trq4fc"
+
+[node name="Move" type="Node" parent="BeehaveTree/ParallelSelector"]
+script = ExtResource("4_8bj0o")
+metadata/_custom_type_script = "uid://d0ygkruu1ks2i"
+
+[node name="Advance" type="Node" parent="BeehaveTree/ParallelSelector/Move"]
+script = ExtResource("4_tgl1r")
+metadata/_custom_type_script = "uid://be5sn77trq4fc"
+
+[node name="WallCheckSequence" type="Node" parent="BeehaveTree/ParallelSelector/Move"]
+script = ExtResource("4_8bj0o")
+metadata/_custom_type_script = "uid://d0ygkruu1ks2i"
+
+[node name="WallCheck" type="Node" parent="BeehaveTree/ParallelSelector/Move/WallCheckSequence"]
+script = ExtResource("4_8tawa")
+metadata/_custom_type_script = "uid://b304hy13pl4vr"
+
+[node name="RayDar" type="Node3D" parent="."]
+
+[node name="FrontRay" type="RayCast3D" parent="RayDar"]
+target_position = Vector3(1, 0, 0)
+collision_mask = 2
+hit_back_faces = false
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="RightRay" type="RayCast3D" parent="RayDar"]
+target_position = Vector3(0, 0, 1)
+collision_mask = 2
+hit_back_faces = false
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="BackRay" type="RayCast3D" parent="RayDar"]
+target_position = Vector3(-1, 0, 0)
+collision_mask = 2
+hit_back_faces = false
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="LeftRay" type="RayCast3D" parent="RayDar"]
+target_position = Vector3(0, 0, -1)
+collision_mask = 2
+hit_back_faces = false
+collide_with_areas = true
+collide_with_bodies = false
