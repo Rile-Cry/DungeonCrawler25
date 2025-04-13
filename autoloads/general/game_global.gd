@@ -10,6 +10,6 @@ func _ready() -> void:
 	print(MusicManager.song_pool)
 
 #region Helpers
-func delay(time: float) -> void:
-	await get_tree().create_timer(time).timeout
+func delay(time: float = 1.0):
+	return get_tree().create_timer(time).timeout
 #endregion

@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://ccbprovahu30p"]
+
+[node name="Game" type="Node"]
+
+[node name="GameScene" type="Node3D" parent="."]
