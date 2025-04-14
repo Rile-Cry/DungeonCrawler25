@@ -1,17 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://d1xg47mwvifgq"]
+[gd_scene load_steps=22 format=3 uid="uid://d1xg47mwvifgq"]
 
 [ext_resource type="Script" uid="uid://cqgodvllic4t4" path="res://TEST_SCENES/bot.gd" id="1_lckyo"]
-[ext_resource type="Script" uid="uid://dlv1p0py4ns6r" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_vb233"]
-[ext_resource type="Script" uid="uid://b27uuavsglrw" path="res://addons/beehave/nodes/composites/selector.gd" id="3_n18ty"]
-[ext_resource type="Script" uid="uid://cbrc0485abmbt" path="res://addons/beehave/nodes/composites/simple_parallel.gd" id="3_tgl1r"]
-[ext_resource type="Script" uid="uid://d0ygkruu1ks2i" path="res://addons/beehave/nodes/composites/sequence.gd" id="4_8bj0o"]
-[ext_resource type="Script" uid="uid://kxocmynflx4m" path="res://TEST_SCENES/wall_check.gd" id="4_8tawa"]
-[ext_resource type="Script" uid="uid://cfj0vfxwykby1" path="res://addons/beehave/nodes/decorators/succeeder.gd" id="4_ihdoj"]
-[ext_resource type="Script" uid="uid://dyoi70t5iwbve" path="res://TEST_SCENES/advance.gd" id="4_tgl1r"]
-[ext_resource type="Script" uid="uid://bxq68ppgigkxp" path="res://TEST_SCENES/idle.gd" id="5_ihdoj"]
-[ext_resource type="Script" uid="uid://ryxw8csr1ghq" path="res://TEST_SCENES/turn_left.gd" id="6_tgl1r"]
-[ext_resource type="Script" uid="uid://chcjbyn66q5v3" path="res://TEST_SCENES/turn_right.gd" id="7_2thui"]
-[ext_resource type="Script" uid="uid://o22yqu4ltgwv" path="res://TEST_SCENES/turn_back.gd" id="8_phjlu"]
+[ext_resource type="Script" uid="uid://doiyy2n1frsu7" path="res://ai/tasks/wall_scan.gd" id="2_lckyo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ihdoj"]
 
@@ -24,6 +14,77 @@ albedo_color = Color(0.584847, 0.0558272, 0.102077, 1)
 material = SubResource("StandardMaterial3D_n18ty")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mhd46"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_vb233"]
+var/hitting_wall/name = &"hitting_wall"
+var/hitting_wall/type = 1
+var/hitting_wall/value = false
+var/hitting_wall/hint = 0
+var/hitting_wall/hint_string = "Return False until turn is complete"
+var/player_found/name = &"player_found"
+var/player_found/type = 1
+var/player_found/value = false
+var/player_found/hint = 0
+var/player_found/hint_string = "Returns True if player found"
+
+[sub_resource type="BBVariant" id="BBVariant_lckyo"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_b5eeu"]
+variable = &"hitting_wall"
+value = SubResource("BBVariant_lckyo")
+custom_name = "Hitting Wall?"
+
+[sub_resource type="BBVariant" id="BBVariant_b5eeu"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_n18ty"]
+variable = &"player_found"
+value = SubResource("BBVariant_b5eeu")
+custom_name = "Player Detected?"
+
+[sub_resource type="BTParallel" id="BTParallel_lckyo"]
+num_failures_required = 0
+repeat = true
+custom_name = "Scans"
+children = [SubResource("BTCheckVar_b5eeu"), SubResource("BTCheckVar_n18ty")]
+
+[sub_resource type="BTAction" id="BTAction_b5eeu"]
+custom_name = "Wall Scan"
+script = ExtResource("2_lckyo")
+
+[sub_resource type="BBNode" id="BBNode_vb233"]
+saved_value = NodePath("RayDar/FrontRay")
+resource_name = "RayDar/FrontRay"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_lckyo"]
+node = SubResource("BBNode_vb233")
+method = &"wall_bonk"
+result_var = &"hitting_wall"
+custom_name = "Call Wall Bonk"
+children = [SubResource("BTAction_b5eeu")]
+
+[sub_resource type="BTDynamicSequence" id="BTDynamicSequence_b5eeu"]
+custom_name = "CheckArea"
+children = [SubResource("BTCallMethod_lckyo")]
+
+[sub_resource type="BTDynamicSequence" id="BTDynamicSequence_8tawa"]
+custom_name = "Roam"
+children = [SubResource("BTDynamicSequence_b5eeu")]
+
+[sub_resource type="BTDynamicSelector" id="BTDynamicSelector_8bj0o"]
+custom_name = "ActionChooser"
+children = [SubResource("BTParallel_lckyo"), SubResource("BTDynamicSequence_8tawa")]
+
+[sub_resource type="BehaviorTree" id="BehaviorTree_lckyo"]
+blackboard_plan = SubResource("BlackboardPlan_vb233")
+root_task = SubResource("BTDynamicSelector_8bj0o")
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_b5eeu"]
 
 [node name="Bot" type="RigidBody3D" node_paths=PackedStringArray("ray_box")]
 collision_mask = 2
@@ -41,58 +102,6 @@ mesh = SubResource("BoxMesh_b5eeu")
 shape = SubResource("BoxShape3D_mhd46")
 debug_color = Color(0.92549, 0, 0.368627, 1)
 
-[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
-script = ExtResource("1_vb233")
-actor_node_path = NodePath("..")
-blackboard = NodePath("@Node@103901")
-actor = NodePath("..")
-metadata/_custom_type_script = "uid://dlv1p0py4ns6r"
-
-[node name="BotBrain" type="Node" parent="BeehaveTree"]
-script = ExtResource("4_8bj0o")
-metadata/_custom_type_script = "uid://d0ygkruu1ks2i"
-
-[node name="AlwaysSucceedDecorator" type="Node" parent="BeehaveTree/BotBrain"]
-script = ExtResource("4_ihdoj")
-metadata/_custom_type_script = "uid://cfj0vfxwykby1"
-
-[node name="Idle" type="Node" parent="BeehaveTree/BotBrain/AlwaysSucceedDecorator"]
-script = ExtResource("5_ihdoj")
-metadata/_custom_type_script = "uid://be5sn77trq4fc"
-
-[node name="Move" type="Node" parent="BeehaveTree/BotBrain"]
-script = ExtResource("3_tgl1r")
-delay_mode = true
-metadata/_custom_type_script = "uid://cbrc0485abmbt"
-
-[node name="Advance" type="Node" parent="BeehaveTree/BotBrain/Move"]
-script = ExtResource("4_tgl1r")
-metadata/_custom_type_script = "uid://be5sn77trq4fc"
-
-[node name="CheckFront" type="Node" parent="BeehaveTree/BotBrain/Move"]
-script = ExtResource("3_n18ty")
-metadata/_custom_type_script = "uid://b27uuavsglrw"
-
-[node name="WallCheck" type="Node" parent="BeehaveTree/BotBrain/Move/CheckFront"]
-script = ExtResource("4_8tawa")
-metadata/_custom_type_script = "uid://b304hy13pl4vr"
-
-[node name="SelectorRandomComposite" type="Node" parent="BeehaveTree/BotBrain/Move/CheckFront"]
-script = ExtResource("3_n18ty")
-metadata/_custom_type_script = "uid://b27uuavsglrw"
-
-[node name="TurnLeft" type="Node" parent="BeehaveTree/BotBrain/Move/CheckFront/SelectorRandomComposite"]
-script = ExtResource("6_tgl1r")
-metadata/_custom_type_script = "uid://be5sn77trq4fc"
-
-[node name="TurnRight" type="Node" parent="BeehaveTree/BotBrain/Move/CheckFront/SelectorRandomComposite"]
-script = ExtResource("7_2thui")
-metadata/_custom_type_script = "uid://be5sn77trq4fc"
-
-[node name="TurnBack" type="Node" parent="BeehaveTree/BotBrain/Move/CheckFront/SelectorRandomComposite"]
-script = ExtResource("8_phjlu")
-metadata/_custom_type_script = "uid://be5sn77trq4fc"
-
 [node name="RayDar" type="Node3D" parent="."]
 
 [node name="FrontRay" type="RayCast3D" parent="RayDar"]
@@ -103,7 +112,6 @@ hit_from_inside = true
 collide_with_areas = true
 
 [node name="RightRay" type="RayCast3D" parent="RayDar"]
-visible = false
 visibility_parent = NodePath("../../MeshInstance3D")
 target_position = Vector3(0, 0, 2)
 collision_mask = 2
@@ -111,7 +119,6 @@ hit_from_inside = true
 collide_with_areas = true
 
 [node name="BackRay" type="RayCast3D" parent="RayDar"]
-visible = false
 visibility_parent = NodePath("../../MeshInstance3D")
 target_position = Vector3(-2, 0, 0)
 collision_mask = 2
@@ -119,9 +126,12 @@ hit_from_inside = true
 collide_with_areas = true
 
 [node name="LeftRay" type="RayCast3D" parent="RayDar"]
-visible = false
 visibility_parent = NodePath("../../MeshInstance3D")
 target_position = Vector3(0, 0, -2)
 collision_mask = 2
 hit_from_inside = true
 collide_with_areas = true
+
+[node name="EnemyAI" type="BTPlayer" parent="."]
+behavior_tree = SubResource("BehaviorTree_lckyo")
+blackboard_plan = SubResource("BlackboardPlan_b5eeu")
