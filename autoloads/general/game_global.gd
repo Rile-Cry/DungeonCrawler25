@@ -1,5 +1,7 @@
 extends Node
 
+var rng = RandomNumberGenerator.new()
+
 #region Loading Up
 func _ready() -> void:
 	# Loading up sounds and then deleting the sound_loader as it's no longer necessary

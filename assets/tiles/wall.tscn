@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccol1wua5j787"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2a801"]
+size = Vector3(5, 0.5, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bnudt"]
+size = Vector3(5, 5, 0.5)
+
+[node name="Wall" type="Node3D"]
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_2a801")
+
+[node name="Wall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, -2.3)
+mesh = SubResource("BoxMesh_bnudt")

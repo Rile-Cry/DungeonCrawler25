@@ -46,7 +46,6 @@ func play_song(song_name: StringName, crossover: bool = false) -> void:
 			var tween = get_tree().create_tween().bind_node(self).set_trans(Tween.TRANS_SINE)
 			tween.tween_property(main_music_player, "volume_linear", 0, 5.0)
 			tween.parallel().tween_property(secondary_music_player, "volume_linear", 1, 5.0)
-			tween.tween_callback(func(): tween.kill)
 			
 			await tween.finished
 			# Move from secondary to main
