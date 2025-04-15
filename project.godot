@@ -18,9 +18,9 @@ config/icon="res://icon.svg"
 
 GameGlobal="*res://autoloads/general/game_global.gd"
 GameGlobalEvents="*res://autoloads/general/game_global_events.gd"
-MapGenerator="*res://autoloads/generators/map_generator.gd"
 MusicManager="*res://autoloads/audio/music_manager.gd"
 SoundManager="*res://autoloads/audio/sound_manager.gd"
+MoveHandler="*res://autoloads/general/move_handler.gd"
 
 [display]
 

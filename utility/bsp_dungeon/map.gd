@@ -3,12 +3,17 @@ extends Node3D
 @export var map : GridMap
 @export var player : Player
 
+var map_size := Vector2i(24, 24)
 var paths := []
 var root_node : Branch
 var tile_size : int = 3
 
 func _ready() -> void:
-	root_node = Branch.new(Vector2i(0, 0), Vector2i(120, 120))
+	if map:
+		MoveHandler.map = map
+	
+	map.cell_size = Vector3i(tile_size, tile_size, tile_size)
+	root_node = Branch.new(Vector2i(0, 0), Vector2i(map_size.x * tile_size, map_size.y * tile_size))
 	root_node.split(3, paths)
 	generate_map()
 
@@ -31,6 +36,8 @@ func generate_map() -> void:
 					
 					var map_pos := map.map_to_local(Vector3i(x + leaf.position.x, 0, y + leaf.position.y))
 					var pos := map.to_global(map_pos)
+					
+					_create_collider(pos)
 	
 	for path in paths:
 		if path['left'].y == path['right'].y:
@@ -70,7 +77,6 @@ func _choose_starting_room() -> Branch:
 	choose_from.erase(boss_room)
 	
 	return choose_from.get(GameGlobal.rng.randi_range(0, choose_from.size() - 1))
-	
 
 func _create_path_cell(pos: Vector2i, value: int = 0, path_width: int = 1, horizontal: bool = false) -> void:
 	var disp : int = 0
@@ -85,3 +91,17 @@ func _create_path_cell(pos: Vector2i, value: int = 0, path_width: int = 1, horiz
 	else:
 		for i in range(path_width):
 			map.set_cell_item(Vector3i(pos.x + (i - disp), 0, pos.y + value), 0)
+
+func _create_collider(pos: Vector3) -> void:
+	var collider := StaticBody3D.new()
+	var shape := CollisionShape3D.new()
+	shape.shape = BoxShape3D.new()
+	shape.shape.size = Vector3(tile_size, tile_size, tile_size)
+	map.add_child(collider)
+	collider.global_position = pos + Vector3(0, tile_size / 2., 0)
+	collider.add_child(shape)
+
+func _on_player_get_target(pos: Vector3, dir: Vector3) -> void:
+	var loc_pos := to_local(pos)
+	var map_pos = map.local_to_map(pos)
+	GameGlobalEvents.receive_target_pos.emit(to_global(map.map_to_local(map_pos + dir)))

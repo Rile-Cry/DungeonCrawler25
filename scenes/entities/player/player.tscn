@@ -1,26 +1,23 @@
-[gd_scene load_steps=6 format=3 uid="uid://bi65u4cbgluxp"]
+[gd_scene load_steps=7 format=3 uid="uid://bi65u4cbgluxp"]
 
 [ext_resource type="Script" uid="uid://c3jgie06mlnjx" path="res://scenes/entities/player/player.gd" id="1_635qg"]
 [ext_resource type="Script" uid="uid://q6dwvy4wu8p" path="res://gameplay/components/health_component.gd" id="2_bj7e2"]
+[ext_resource type="Script" uid="uid://c7g1criqmwxaa" path="res://gameplay/states/player_states/turning_state.gd" id="5_bjvvg"]
 [ext_resource type="Script" uid="uid://rjtvlthl4kw1" path="res://gameplay/states/player_states/idle_state.gd" id="8_1murt"]
 [ext_resource type="Script" uid="uid://cw8m3meedjdjq" path="res://gameplay/states/player_states/moving_state.gd" id="9_5sj0x"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_yel1f"]
 
-[node name="Player" type="Node3D" node_paths=PackedStringArray("hsm", "idle_state", "moving_state", "ray")]
+[node name="Player" type="Node3D" node_paths=PackedStringArray("hsm", "idle_state", "moving_state", "turning_state")]
 script = ExtResource("1_635qg")
 hsm = NodePath("LimboHSM")
 idle_state = NodePath("LimboHSM/IdleState")
 moving_state = NodePath("LimboHSM/MovingState")
-ray = NodePath("RayCast3D")
+turning_state = NodePath("LimboHSM/TurningState")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("2_bj7e2")
 hp = 5
-
-[node name="RayCast3D" type="RayCast3D" parent="."]
-target_position = Vector3(0, 0, -5)
-collide_with_areas = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_yel1f")
@@ -34,3 +31,6 @@ script = ExtResource("8_1murt")
 
 [node name="MovingState" type="LimboState" parent="LimboHSM"]
 script = ExtResource("9_5sj0x")
+
+[node name="TurningState" type="LimboState" parent="LimboHSM"]
+script = ExtResource("5_bjvvg")
