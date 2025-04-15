@@ -1,5 +1,29 @@
-[gd_scene format=3 uid="uid://ccbprovahu30p"]
+[gd_scene load_steps=6 format=3 uid="uid://ccbprovahu30p"]
+
+[ext_resource type="Script" uid="uid://dusydvvn536hy" path="res://utility/bsp_dungeon/map.gd" id="1_yqjtg"]
+[ext_resource type="MeshLibrary" uid="uid://bbf5k8wvd2cbj" path="res://assets/tiles/library_empty.tres" id="2_yqjtg"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uwrxv"]
+
+[sub_resource type="Sky" id="Sky_yqjtg"]
+sky_material = SubResource("ProceduralSkyMaterial_uwrxv")
+
+[sub_resource type="Environment" id="Environment_lnu2h"]
+background_mode = 2
+sky = SubResource("Sky_yqjtg")
 
 [node name="Game" type="Node"]
 
 [node name="GameScene" type="Node3D" parent="."]
+
+[node name="Map" type="Node3D" parent="GameScene" node_paths=PackedStringArray("camera", "map")]
+script = ExtResource("1_yqjtg")
+camera = NodePath("../Camera3D")
+map = NodePath("GridMap")
+
+[node name="GridMap" type="GridMap" parent="GameScene/Map"]
+mesh_library = ExtResource("2_yqjtg")
+
+[node name="Camera3D" type="Camera3D" parent="GameScene"]
+transform = Transform3D(-0.374623, 0.239971, -0.895584, 1.32593e-08, 0.965926, 0.258819, 0.927177, 0.0969595, -0.361858, -12.7891, 54.7894, 1.6067)
+environment = SubResource("Environment_lnu2h")

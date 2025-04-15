@@ -7,3 +7,7 @@ enum BusID {
 	UI,
 	AMBIENT
 }
+
+enum DungeonTileType {
+	EMPTY
+}

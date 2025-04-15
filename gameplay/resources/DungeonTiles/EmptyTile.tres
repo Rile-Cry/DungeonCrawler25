@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DungeonTileResource" load_steps=3 format=3 uid="uid://5e6w4lm4tmyl"]
+
+[ext_resource type="Script" uid="uid://huee5744xmnt" path="res://gameplay/resources/DungeonTileResource.gd" id="1_5xnm7"]
+[ext_resource type="PackedScene" uid="uid://c0w47l50uesya" path="res://scenes/dungeon_tiles/dungeon_tile.tscn" id="2_bf74q"]
+
+[resource]
+script = ExtResource("1_5xnm7")
+tile_name = &"Empty Tile"
+tile_id = 0
+tile_type = 0
+tile_scene = ExtResource("2_bf74q")
+metadata/_custom_type_script = "uid://huee5744xmnt"
