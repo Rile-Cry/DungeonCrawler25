@@ -10,7 +10,7 @@ var dir : Vector3
 func _ready() -> void:
 	_init_state_machine()
 
-func _init_state_machine() -> void:
+func _init_state_machine() -> void:	
 	hsm.add_transition(idle_state, moving_state, &"moving")
 	hsm.add_transition(moving_state, idle_state, moving_state.EVENT_FINISHED)
 	

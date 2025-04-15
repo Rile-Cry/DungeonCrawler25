@@ -1,31 +1,40 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccbprovahu30p"]
+[gd_scene load_steps=8 format=3 uid="uid://ccbprovahu30p"]
 
 [ext_resource type="Script" uid="uid://dusydvvn536hy" path="res://utility/bsp_dungeon/map.gd" id="1_yqjtg"]
-[ext_resource type="MeshLibrary" uid="uid://bbf5k8wvd2cbj" path="res://assets/tiles/library_empty.tres" id="2_yqjtg"]
+[ext_resource type="MeshLibrary" uid="uid://mvup2wau43ij" path="res://assets/tiles/library_test.tres" id="2_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://bi65u4cbgluxp" path="res://scenes/entities/player/player.tscn" id="2_lnu2h"]
+[ext_resource type="Texture2D" uid="uid://cm0q1ohdkgg1e" path="res://assets/images/skybox/ringed_gas_giant_planet.png" id="4_lbhrr"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uwrxv"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_iywne"]
+panorama = ExtResource("4_lbhrr")
 
-[sub_resource type="Sky" id="Sky_yqjtg"]
-sky_material = SubResource("ProceduralSkyMaterial_uwrxv")
+[sub_resource type="Sky" id="Sky_p57ef"]
+sky_material = SubResource("PanoramaSkyMaterial_iywne")
 
-[sub_resource type="Environment" id="Environment_lnu2h"]
+[sub_resource type="Environment" id="Environment_u5sy4"]
 background_mode = 2
-sky = SubResource("Sky_yqjtg")
+sky = SubResource("Sky_p57ef")
 
 [node name="Game" type="Node"]
 
 [node name="GameScene" type="Node3D" parent="."]
 
-[node name="Map" type="Node3D" parent="GameScene" node_paths=PackedStringArray("camera", "map")]
+[node name="Map" type="Node3D" parent="GameScene" node_paths=PackedStringArray("map", "player")]
 script = ExtResource("1_yqjtg")
-camera = NodePath("../Camera3D")
 map = NodePath("GridMap")
+player = NodePath("../Player")
 
 [node name="GridMap" type="GridMap" parent="GameScene/Map"]
-mesh_library = ExtResource("2_yqjtg")
-cell_size = Vector3(5, 5, 5)
+mesh_library = ExtResource("2_lbhrr")
+cell_size = Vector3(3, 3, 3)
 cell_center_y = false
 
-[node name="Camera3D" type="Camera3D" parent="GameScene"]
-transform = Transform3D(-0.374623, 0.239971, -0.895584, 1.32593e-08, 0.965926, 0.258819, 0.927177, 0.0969595, -0.361858, -12.7891, 54.7894, 1.6067)
-environment = SubResource("Environment_lnu2h")
+[node name="Player" parent="GameScene" instance=ExtResource("2_lnu2h")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="GameScene"]
+transform = Transform3D(-4.36969e-08, -0.0257408, 0.999669, -1.12516e-09, 0.999669, 0.0257408, -1, 3.07906e-15, -4.37114e-08, 0, 0, 0)
+shadow_enabled = true
+shadow_reverse_cull_face = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_u5sy4")

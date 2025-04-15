@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bi65u4cbgluxp"]
+[gd_scene load_steps=6 format=3 uid="uid://bi65u4cbgluxp"]
 
 [ext_resource type="Script" uid="uid://c3jgie06mlnjx" path="res://scenes/entities/player/player.gd" id="1_635qg"]
 [ext_resource type="Script" uid="uid://q6dwvy4wu8p" path="res://gameplay/components/health_component.gd" id="2_bj7e2"]
@@ -6,13 +6,6 @@
 [ext_resource type="Script" uid="uid://cw8m3meedjdjq" path="res://gameplay/states/player_states/moving_state.gd" id="9_5sj0x"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_yel1f"]
-
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_nh4ur"]
-var/moving/name = &"moving"
-var/moving/type = 1
-var/moving/value = false
-var/moving/hint = 0
-var/moving/hint_string = ""
 
 [node name="Player" type="Node3D" node_paths=PackedStringArray("hsm", "idle_state", "moving_state", "ray")]
 script = ExtResource("1_635qg")
@@ -35,7 +28,6 @@ mesh = SubResource("BoxMesh_yel1f")
 [node name="Camera3D" type="Camera3D" parent="."]
 
 [node name="LimboHSM" type="LimboHSM" parent="."]
-blackboard_plan = SubResource("BlackboardPlan_nh4ur")
 
 [node name="IdleState" type="LimboState" parent="LimboHSM"]
 script = ExtResource("8_1murt")
