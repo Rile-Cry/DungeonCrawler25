@@ -14,15 +14,20 @@ var/moving/value = false
 var/moving/hint = 0
 var/moving/hint_string = ""
 
-[node name="Player" type="Node3D" node_paths=PackedStringArray("hsm", "idle_state", "moving_state")]
+[node name="Player" type="Node3D" node_paths=PackedStringArray("hsm", "idle_state", "moving_state", "ray")]
 script = ExtResource("1_635qg")
 hsm = NodePath("LimboHSM")
 idle_state = NodePath("LimboHSM/IdleState")
 moving_state = NodePath("LimboHSM/MovingState")
+ray = NodePath("RayCast3D")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("2_bj7e2")
 hp = 5
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -5)
+collide_with_areas = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_yel1f")

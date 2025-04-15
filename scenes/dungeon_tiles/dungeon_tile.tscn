@@ -8,6 +8,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wxn3b"]
 render_priority = 0
 shader = ExtResource("2_wouei")
+shader_parameter/color = Vector3(0.5, 0.5, 1)
 
 [node name="DungeonTile" type="Node3D" node_paths=PackedStringArray("center_position")]
 script = ExtResource("1_vjp82")

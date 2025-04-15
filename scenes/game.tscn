@@ -23,6 +23,8 @@ map = NodePath("GridMap")
 
 [node name="GridMap" type="GridMap" parent="GameScene/Map"]
 mesh_library = ExtResource("2_yqjtg")
+cell_size = Vector3(5, 5, 5)
+cell_center_y = false
 
 [node name="Camera3D" type="Camera3D" parent="GameScene"]
 transform = Transform3D(-0.374623, 0.239971, -0.895584, 1.32593e-08, 0.965926, 0.258819, 0.927177, 0.0969595, -0.361858, -12.7891, 54.7894, 1.6067)

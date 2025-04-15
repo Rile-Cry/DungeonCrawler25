@@ -1,5 +1,7 @@
 shader_type spatial;
 
+uniform vec3 color = vec3(0.5, 0.5, 1);
+
 void vertex() {
 	// Called for every vertex the material is visible on.
 }

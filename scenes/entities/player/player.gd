@@ -3,6 +3,7 @@ class_name Player extends Node3D
 @export var hsm : LimboHSM
 @export var idle_state : LimboState
 @export var moving_state : LimboState
+@export var ray : RayCast3D
 
 var dir : Vector3
 
