@@ -1,137 +1,157 @@
-[gd_scene load_steps=22 format=3 uid="uid://d1xg47mwvifgq"]
+[gd_scene load_steps=13 format=3 uid="uid://d1xg47mwvifgq"]
 
 [ext_resource type="Script" uid="uid://cqgodvllic4t4" path="res://TEST_SCENES/bot.gd" id="1_lckyo"]
-[ext_resource type="Script" uid="uid://doiyy2n1frsu7" path="res://ai/tasks/wall_scan.gd" id="2_lckyo"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ihdoj"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lckyo"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n18ty"]
-albedo_color = Color(0.584847, 0.0558272, 0.102077, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_b5eeu"]
-material = SubResource("StandardMaterial3D_n18ty")
+[ext_resource type="BehaviorTree" uid="uid://c00xr2o8jwmcn" path="res://ai/trees/Walker_AI.tres" id="2_lckyo"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mhd46"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lckyo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b5eeu"]
+albedo_color = Color(0.584847, 0.0558272, 0.102077, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b5eeu"]
+material = SubResource("StandardMaterial3D_b5eeu")
+
+[sub_resource type="Animation" id="Animation_n18ty"]
+resource_name = "BotScan"
+length = 0.5
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array()
+
+[sub_resource type="Animation" id="Animation_lckyo"]
+resource_name = "BotWalk"
+length = 0.5
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Root")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, 0.5, 0, 0.3, 1, 0, 0.75, 0, 0.5, 1, 0, 0, 0)
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"advance"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_b5eeu"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_8tawa"]
+resource_name = "BotTurn"
+length = 0.5
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array()
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"turn"
+}]
+}
+tracks/2/type = "rotation_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Root")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array()
+tracks/3/type = "position_3d"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Root")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, 0.5, 0, 0.3, 1, 0, 0.75, 0, 0.5, 1, 0, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b5eeu"]
+_data = {
+&"BotScan": SubResource("Animation_n18ty"),
+&"BotTurn": SubResource("Animation_8tawa"),
+&"BotWalk": SubResource("Animation_lckyo"),
+&"RESET": SubResource("Animation_b5eeu")
+}
+
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vb233"]
-var/hitting_wall/name = &"hitting_wall"
-var/hitting_wall/type = 1
-var/hitting_wall/value = false
-var/hitting_wall/hint = 0
-var/hitting_wall/hint_string = "Return False until turn is complete"
-var/player_found/name = &"player_found"
-var/player_found/type = 1
-var/player_found/value = false
-var/player_found/hint = 0
-var/player_found/hint_string = "Returns True if player found"
 
-[sub_resource type="BBVariant" id="BBVariant_lckyo"]
-type = 1
-saved_value = true
-resource_name = "true"
-
-[sub_resource type="BTCheckVar" id="BTCheckVar_b5eeu"]
-variable = &"hitting_wall"
-value = SubResource("BBVariant_lckyo")
-custom_name = "Hitting Wall?"
-
-[sub_resource type="BBVariant" id="BBVariant_b5eeu"]
-type = 1
-saved_value = true
-resource_name = "true"
-
-[sub_resource type="BTCheckVar" id="BTCheckVar_n18ty"]
-variable = &"player_found"
-value = SubResource("BBVariant_b5eeu")
-custom_name = "Player Detected?"
-
-[sub_resource type="BTParallel" id="BTParallel_lckyo"]
-num_failures_required = 0
-repeat = true
-custom_name = "Scans"
-children = [SubResource("BTCheckVar_b5eeu"), SubResource("BTCheckVar_n18ty")]
-
-[sub_resource type="BTAction" id="BTAction_b5eeu"]
-custom_name = "Wall Scan"
-script = ExtResource("2_lckyo")
-
-[sub_resource type="BBNode" id="BBNode_vb233"]
-saved_value = NodePath("RayDar/FrontRay")
-resource_name = "RayDar/FrontRay"
-
-[sub_resource type="BTCallMethod" id="BTCallMethod_lckyo"]
-node = SubResource("BBNode_vb233")
-method = &"wall_bonk"
-result_var = &"hitting_wall"
-custom_name = "Call Wall Bonk"
-children = [SubResource("BTAction_b5eeu")]
-
-[sub_resource type="BTDynamicSequence" id="BTDynamicSequence_b5eeu"]
-custom_name = "CheckArea"
-children = [SubResource("BTCallMethod_lckyo")]
-
-[sub_resource type="BTDynamicSequence" id="BTDynamicSequence_8tawa"]
-custom_name = "Roam"
-children = [SubResource("BTDynamicSequence_b5eeu")]
-
-[sub_resource type="BTDynamicSelector" id="BTDynamicSelector_8bj0o"]
-custom_name = "ActionChooser"
-children = [SubResource("BTParallel_lckyo"), SubResource("BTDynamicSequence_8tawa")]
-
-[sub_resource type="BehaviorTree" id="BehaviorTree_lckyo"]
-blackboard_plan = SubResource("BlackboardPlan_vb233")
-root_task = SubResource("BTDynamicSelector_8bj0o")
-
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_b5eeu"]
-
-[node name="Bot" type="RigidBody3D" node_paths=PackedStringArray("ray_box")]
-collision_mask = 2
-physics_material_override = SubResource("PhysicsMaterial_ihdoj")
-gravity_scale = 0.0
+[node name="Bot" type="CharacterBody3D" node_paths=PackedStringArray("ray_box")]
+disable_mode = 2
 script = ExtResource("1_lckyo")
 ray_box = NodePath("RayDar")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_lckyo")
-cast_shadow = 0
-mesh = SubResource("BoxMesh_b5eeu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_mhd46")
 debug_color = Color(0.92549, 0, 0.368627, 1)
 
+[node name="Root" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Root"]
+material_override = SubResource("StandardMaterial3D_lckyo")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_b5eeu")
+skeleton = NodePath("../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_b5eeu")
+}
+playback_default_blend_time = 0.1
+
 [node name="RayDar" type="Node3D" parent="."]
 
 [node name="FrontRay" type="RayCast3D" parent="RayDar"]
-visibility_parent = NodePath("../../MeshInstance3D")
-target_position = Vector3(2, 0, 0)
-collision_mask = 2
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+target_position = Vector3(0, 0, 2)
+collision_mask = 128
 hit_from_inside = true
-collide_with_areas = true
+debug_shape_custom_color = Color(0.752598, 0.450396, 0.471474, 1)
+debug_shape_thickness = 5
 
 [node name="RightRay" type="RayCast3D" parent="RayDar"]
-visibility_parent = NodePath("../../MeshInstance3D")
-target_position = Vector3(0, 0, 2)
-collision_mask = 2
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+target_position = Vector3(-2, 0, 0)
+collision_mask = 128
 hit_from_inside = true
-collide_with_areas = true
 
 [node name="BackRay" type="RayCast3D" parent="RayDar"]
-visibility_parent = NodePath("../../MeshInstance3D")
-target_position = Vector3(-2, 0, 0)
-collision_mask = 2
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+target_position = Vector3(0, 0, -2)
+collision_mask = 128
 hit_from_inside = true
-collide_with_areas = true
 
 [node name="LeftRay" type="RayCast3D" parent="RayDar"]
-visibility_parent = NodePath("../../MeshInstance3D")
-target_position = Vector3(0, 0, -2)
-collision_mask = 2
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+target_position = Vector3(2, 0, 0)
+collision_mask = 128
 hit_from_inside = true
-collide_with_areas = true
 
-[node name="EnemyAI" type="BTPlayer" parent="."]
-behavior_tree = SubResource("BehaviorTree_lckyo")
-blackboard_plan = SubResource("BlackboardPlan_b5eeu")
+[node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("2_lckyo")
+blackboard_plan = SubResource("BlackboardPlan_vb233")

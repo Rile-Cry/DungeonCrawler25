@@ -1,0 +1,66 @@
+[gd_resource type="BehaviorTree" load_steps=14 format=3 uid="uid://c00xr2o8jwmcn"]
+
+[ext_resource type="Script" uid="uid://cpjj1o51nr6jc" path="res://ai/tasks/advance.gd" id="2_xd8ps"]
+[ext_resource type="Script" uid="uid://nojxgxbvoiiw" path="res://ai/tasks/turn.gd" id="3_jikak"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_vb233"]
+var/player_found/name = &"player_found"
+var/player_found/type = 1
+var/player_found/value = false
+var/player_found/hint = 0
+var/player_found/hint_string = "Returns True if player found"
+var/facing/name = &"facing"
+var/facing/type = 10
+var/facing/value = Vector3i(0, 0, 0)
+var/facing/hint = 0
+var/facing/hint_string = ""
+var/scanning_wall/name = &"scanning_wall"
+var/scanning_wall/type = 1
+var/scanning_wall/value = false
+var/scanning_wall/hint = 0
+var/scanning_wall/hint_string = ""
+var/tweening/name = &"tweening"
+var/tweening/type = 1
+var/tweening/value = false
+var/tweening/hint = 0
+var/tweening/hint_string = ""
+
+[sub_resource type="BBNode" id="BBNode_xd8ps"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_jikak"]
+animation_player = SubResource("BBNode_xd8ps")
+animation_name = &"BotWalk"
+
+[sub_resource type="BTAction" id="BTAction_xd8ps"]
+script = ExtResource("2_xd8ps")
+
+[sub_resource type="BTWait" id="BTWait_xd8ps"]
+duration = 0.5
+
+[sub_resource type="BTSequence" id="BTSequence_jikak"]
+custom_name = "Advance"
+children = [SubResource("BTPlayAnimation_jikak"), SubResource("BTAction_xd8ps"), SubResource("BTWait_xd8ps")]
+
+[sub_resource type="BTAction" id="BTAction_otxdf"]
+script = ExtResource("3_jikak")
+
+[sub_resource type="BBNode" id="BBNode_jikak"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_wjqib"]
+await_completion = 0.5
+animation_player = SubResource("BBNode_jikak")
+animation_name = &"BotTurn"
+
+[sub_resource type="BTSequence" id="BTSequence_wjqib"]
+children = [SubResource("BTAction_otxdf"), SubResource("BTPlayAnimation_wjqib")]
+
+[sub_resource type="BTSelector" id="BTSelector_xd8ps"]
+children = [SubResource("BTSequence_jikak"), SubResource("BTSequence_wjqib")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_vb233")
+root_task = SubResource("BTSelector_xd8ps")
