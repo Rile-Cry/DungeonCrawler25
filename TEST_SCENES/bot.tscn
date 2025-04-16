@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d1xg47mwvifgq"]
+[gd_scene load_steps=14 format=3 uid="uid://d1xg47mwvifgq"]
 
 [ext_resource type="Script" uid="uid://cqgodvllic4t4" path="res://TEST_SCENES/bot.gd" id="1_lckyo"]
 [ext_resource type="BehaviorTree" uid="uid://c00xr2o8jwmcn" path="res://ai/trees/Walker_AI.tres" id="2_lckyo"]
@@ -23,34 +23,6 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array()
-
-[sub_resource type="Animation" id="Animation_lckyo"]
-resource_name = "BotWalk"
-length = 0.5
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Root")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, 0.5, 0, 0.3, 1, 0, 0.75, 0, 0.5, 1, 0, 0, 0)
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"advance"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_b5eeu"]
-length = 0.001
 
 [sub_resource type="Animation" id="Animation_8tawa"]
 resource_name = "BotTurn"
@@ -91,8 +63,57 @@ tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, 0.5, 0, 0.3, 1, 0, 0.75, 0, 0.5, 1, 0, 0, 0)
 
+[sub_resource type="Animation" id="Animation_lckyo"]
+resource_name = "BotWalk"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Root")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.25, 1, 0, 0.25, 0, 0.5, 1, 0, 0, 0)
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"advance"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_b5eeu"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Root")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_8bj0o"]
+resource_name = "BotIdle"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Root")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, 0, 0)
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b5eeu"]
 _data = {
+&"BotIdle": SubResource("Animation_8bj0o"),
 &"BotScan": SubResource("Animation_n18ty"),
 &"BotTurn": SubResource("Animation_8tawa"),
 &"BotWalk": SubResource("Animation_lckyo"),
@@ -122,6 +143,7 @@ skeleton = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_b5eeu")
 }
+autoplay = "BotIdle"
 playback_default_blend_time = 0.1
 
 [node name="RayDar" type="Node3D" parent="."]

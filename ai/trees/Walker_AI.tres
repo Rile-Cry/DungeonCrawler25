@@ -1,29 +1,29 @@
-[gd_resource type="BehaviorTree" load_steps=14 format=3 uid="uid://c00xr2o8jwmcn"]
+[gd_resource type="BehaviorTree" load_steps=17 format=3 uid="uid://c00xr2o8jwmcn"]
 
+[ext_resource type="Script" uid="uid://dflkrw6mr2t5u" path="res://ai/tasks/path_scan.gd" id="1_jikak"]
 [ext_resource type="Script" uid="uid://cpjj1o51nr6jc" path="res://ai/tasks/advance.gd" id="2_xd8ps"]
 [ext_resource type="Script" uid="uid://nojxgxbvoiiw" path="res://ai/tasks/turn.gd" id="3_jikak"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vb233"]
-var/player_found/name = &"player_found"
-var/player_found/type = 1
-var/player_found/value = false
-var/player_found/hint = 0
-var/player_found/hint_string = "Returns True if player found"
-var/facing/name = &"facing"
-var/facing/type = 10
-var/facing/value = Vector3i(0, 0, 0)
-var/facing/hint = 0
-var/facing/hint_string = ""
-var/scanning_wall/name = &"scanning_wall"
-var/scanning_wall/type = 1
-var/scanning_wall/value = false
-var/scanning_wall/hint = 0
-var/scanning_wall/hint_string = ""
-var/tweening/name = &"tweening"
-var/tweening/type = 1
-var/tweening/value = false
-var/tweening/hint = 0
-var/tweening/hint_string = ""
+var/path/name = &"path"
+var/path/type = 2
+var/path/value = 0
+var/path/hint = 1
+var/path/hint_string = "0,3,0"
+var/var/name = &"var"
+var/var/type = 3
+var/var/value = 0.0
+var/var/hint = 0
+var/var/hint_string = ""
+var/open_paths/name = &"open_paths"
+var/open_paths/type = 28
+var/open_paths/value = []
+var/open_paths/hint = 0
+var/open_paths/hint_string = ""
+
+[sub_resource type="BTAction" id="BTAction_jikak"]
+script = ExtResource("1_jikak")
+open_paths = &"open_paths"
 
 [sub_resource type="BBNode" id="BBNode_xd8ps"]
 saved_value = NodePath("AnimationPlayer")
@@ -43,6 +43,12 @@ duration = 0.5
 custom_name = "Advance"
 children = [SubResource("BTPlayAnimation_jikak"), SubResource("BTAction_xd8ps"), SubResource("BTWait_xd8ps")]
 
+[sub_resource type="BTParallel" id="BTParallel_jikak"]
+num_successes_required = 2
+num_failures_required = 0
+custom_name = "PathScan"
+children = [SubResource("BTAction_jikak"), SubResource("BTSequence_jikak")]
+
 [sub_resource type="BTAction" id="BTAction_otxdf"]
 script = ExtResource("3_jikak")
 
@@ -59,7 +65,7 @@ animation_name = &"BotTurn"
 children = [SubResource("BTAction_otxdf"), SubResource("BTPlayAnimation_wjqib")]
 
 [sub_resource type="BTSelector" id="BTSelector_xd8ps"]
-children = [SubResource("BTSequence_jikak"), SubResource("BTSequence_wjqib")]
+children = [SubResource("BTParallel_jikak"), SubResource("BTSequence_wjqib")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_vb233")

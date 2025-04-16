@@ -6,9 +6,6 @@ extends BTAction
 func _tick(_delta: float) -> Status:
 	
 	agent.advance()
-	if elapsed_time > .5:
-		print("Agent Facing: " + str(agent.get_facing()) + " to Advance has finished")
-		return FAILURE
-	elif agent.wall_bonk():
+	if elapsed_time > .5 or agent.rays[0].is_colliding():
 		return FAILURE
 	return RUNNING

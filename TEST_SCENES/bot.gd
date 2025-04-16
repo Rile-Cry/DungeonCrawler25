@@ -1,13 +1,10 @@
-class_name Bot
-
-extends CharacterBody3D
+class_name Bot extends CharacterBody3D
 
 @export var ray_box:Node3D
 var rays : Array[RayCast3D]
-var scanning_wall : bool = false
 @onready var tweener:Tween
-var facing : Array[StringName] = ["north","east","south","west"]
-var current_dir:StringName = "north"
+var facing : Array[int] = [0,1,2,3]
+var current_dir:int = 0
 
 func _ready() -> void:
 	## Rays
@@ -23,40 +20,43 @@ func toggle_ray() -> void :
 func get_pos() -> Vector3:
 	return position
 
-func get_facing() -> Vector3:
+func get_facing() -> Vector3i:
 	match current_dir:
-		"north": return -basis.z
-		"east": return -basis.x
-		"south": return basis.z
-		"west": return basis.x
-	return Vector3(0,0,1)
+		0: return -basis.z as Vector3i		# North
+		1: return -basis.x as Vector3i		# East
+		2: return basis.z as Vector3i		# South
+		3: return basis.x as Vector3i		# West
+	return -basis.z as Vector3i
 
 func update_facing(dir_change:int) -> void:
-	var temp = facing.find(current_dir)
-	#print("Mod Result: " + str(temp+dir_change)%4)
-	current_dir=facing[((temp+dir_change)%4)]
-
+	var temp = rays.find(current_dir)
+	temp += dir_change
+	current_dir = temp%rays.size()
+	print("Current dir: " + str(current_dir))
+	print("Mod Result: " + str(temp+dir_change)%4)
+	
 func wall_bonk() -> bool:
 	if rays[0].is_colliding() :
-		scanning_wall = true
 		return true
 	else : 
-		scanning_wall = false 
 		return false
+
 func advance() -> void:
 	#self.set_physics_process(false)
 	if !wall_bonk():
 		tween_translate(get_facing())
 		## TODO : Update this so that the movement is actually handled by the behavioral tree
 
-func turn() -> int:
-	var pick_direction : int = 0
+func path_search() -> Array[int] :
+	var temp : Array[int]
 	for r in rays :
-		if r.is_colliding() :
-			pick_direction += r.get_index()
-	if pick_direction == 0 :
-		return randi_range(1,3)
-	return (pick_direction % rays.size())
+		if !r.is_colliding():
+			temp.append(r.get_index())
+	
+	print(temp)
+	print("Above is results of PATH SEARCH")
+	return temp
+
 
 func tween_translate(new_pos:Vector3) -> void:
 	tweener = get_tree().create_tween().bind_node(self).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
@@ -71,13 +71,13 @@ func tween_rotate(mode:int)-> void:
 		mode = randi_range(1,3)
 	match mode:
 		1: 
-			var q = Quaternion(self.basis.y,deg_to_rad(90))
-			tweener.tween_property(self,"quaternion",q,.5)
+			tweener.tween_property(self,"rotation_degrees:y",self.rotation_degrees.y+90,.5)
+			current_dir+=mode%4
 		2: 
-			var q = Quaternion(self.basis.y,deg_to_rad(180))
-			tweener.tween_property(self,"quaternion",q,.5)
+			tweener.tween_property(self,"rotation_degrees:y",self.rotation_degrees.y+180,.5)
+			current_dir+=mode%4
 		3: 
-			var q = Quaternion(self.basis.y,deg_to_rad(270))
-			tweener.tween_property(self,"quaternion",q,.5)
+			tweener.tween_property(self,"rotation_degrees:y",self.rotation_degrees.y-90,.5)
+			current_dir+=mode%4
 		0: return
 	await tweener.finished

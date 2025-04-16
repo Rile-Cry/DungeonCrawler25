@@ -1,4 +1,4 @@
-extends Node3D
+class_name Map extends Node3D
 
 @export var map : GridMap
 @export var player : Player

@@ -5,6 +5,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wxn3b"]
 render_priority = 0
 shader = ExtResource("1_spy40")
+shader_parameter/color = Vector3(0.5, 0.5, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_tb8ee"]
 material = SubResource("ShaderMaterial_wxn3b")
