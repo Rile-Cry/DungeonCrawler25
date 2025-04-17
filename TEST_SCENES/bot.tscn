@@ -184,6 +184,7 @@ blackboard_plan = SubResource("BlackboardPlan_vb233")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("bot", "facing", "current_dir", "bot_rotation", "bot_g_rotation", "bot_l_rotation")]
 transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 5.92638, 2)
+visible = false
 current = true
 script = ExtResource("3_b5eeu")
 bot = NodePath("..")
@@ -194,6 +195,7 @@ bot_g_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot _g_rot")
 bot_l_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot_l_rot")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
+visible = false
 follow_viewport_enabled = true
 
 [node name="Control" type="Control" parent="Camera3D/CanvasLayer"]

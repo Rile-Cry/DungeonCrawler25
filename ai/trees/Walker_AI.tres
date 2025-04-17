@@ -1,7 +1,7 @@
 [gd_resource type="BehaviorTree" load_steps=14 format=3 uid="uid://c00xr2o8jwmcn"]
 
 [ext_resource type="Script" uid="uid://dflkrw6mr2t5u" path="res://ai/tasks/path_scan.gd" id="1_jikak"]
-[ext_resource type="Script" uid="uid://nojxgxbvoiiw" path="res://ai/tasks/turn.gd" id="3_jikak"]
+[ext_resource type="Script" uid="uid://nojxgxbvoiiw" path="res://ai/tasks/move.gd" id="2_xd8ps"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vb233"]
 
@@ -25,18 +25,18 @@ custom_name = "AnimationRunner"
 children = [SubResource("BTPlayAnimation_4fx76")]
 
 [sub_resource type="BTWait" id="BTWait_xd8ps"]
-duration = 0.5
+duration = 0.1
 
 [sub_resource type="BTAction" id="BTAction_otxdf"]
-script = ExtResource("3_jikak")
-open_paths = null
+script = ExtResource("2_xd8ps")
+open_paths = &"open_paths"
 
 [sub_resource type="BTSequence" id="BTSequence_xd8ps"]
 custom_name = "MoveRunner"
 children = [SubResource("BTAction_otxdf")]
 
 [sub_resource type="BTSequence" id="BTSequence_wjqib"]
-custom_name = "Move"
+custom_name = "MoveLogic"
 children = [SubResource("BTAlwaysSucceed_xd8ps"), SubResource("BTSequence_jikak"), SubResource("BTWait_xd8ps"), SubResource("BTSequence_xd8ps")]
 
 [sub_resource type="BTSelector" id="BTSelector_wjqib"]

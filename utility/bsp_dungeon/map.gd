@@ -3,6 +3,7 @@ class_name Map extends Node3D
 @export var map : GridMap
 @export var bot : PackedScene
 @export var player : Player
+var boss_loc : Branch
 #@export var bot : Bot
 
 @export var map_size := Vector2i(6, 6)
@@ -16,12 +17,18 @@ func _ready() -> void:
 	
 	map.cell_size = Vector3i(tile_size, tile_size, tile_size)
 	root_node = Branch.new(Vector2i(0, 0), Vector2i(map_size.x * tile_size, map_size.y * tile_size))
-	#root_node.split(3, paths)
-	root_node.split(0, paths)
+	root_node.split(3, paths)
+	#sroot_node.split(0, paths)
 	generate_map()
+	var loop = 0
+	while loop < 10:
+		spawn_boss(boss_loc)
+		loop +=1
+
 
 func generate_map() -> void:
 	var boss_room = _find_boss_room()
+	boss_loc = boss_room
 	var starter_room = _choose_starting_room()
 	
 	for leaf in root_node.get_leaves():
@@ -56,7 +63,7 @@ func generate_map() -> void:
 	
 	#player.global_position = pos + Vector3(0, 3, 0)
 	#bot.global_position = pos + Vector3(0, 3, 0)
-	spawn_boss(boss_room)
+
 
 func is_inside_padding(x : int, y : int, leaf : Branch, padding : Vector4i) -> bool:
 	return x <= padding.x or y < padding.y or x >= leaf.size.x - padding.z or y >= leaf.size.y - padding.w

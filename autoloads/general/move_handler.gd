@@ -9,13 +9,11 @@ func move_body(body: Node3D) -> void:
 	map_pos += Vector3i(new_dir)
 	if "target_dir" in body:
 		if map.get_cell_item(map_pos + Vector3i(0, -1, 0)) > -1:
-			print(body.target_dir)
 			var offset : int = .5 if (int(map.cell_size.x) % 2 == 1) else 0
 			body.target_dir = grab_tile_global_position(map_pos) + Vector3(offset, 0, offset)
 		else:
-			print(body.global_position)
 			body.target_dir = body.global_position
-			print("we really should have stopped here")
+			#print("we really should have stopped here")
 	else:
 		push_warning("There is no variable 'target_dir' in " + body.name)
 

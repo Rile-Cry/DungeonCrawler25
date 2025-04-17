@@ -35,15 +35,15 @@ func path_search() -> Array[int] :
 	for r in rays :
 		if !r.is_colliding():
 			temp.append(r.get_index())
-	print(temp)
-	print("Above is results of PATH SEARCH")
+	#print(temp)
+	#print("Above is results of PATH SEARCH")
 	return temp
 
 func move_bot(pick:int) -> void:
-	target_dir = directions[pick]
-	update_facing(pick)
+	update_facing(pick)	
 	if pick == 0:
 		MoveHandler.move_body(self)
+		if target_dir == global_position : return
 		tween_translate(pick)
 	else:
 		tween_rotate(pick)
@@ -52,8 +52,8 @@ func move_bot(pick:int) -> void:
 func tween_translate(facing:int) -> void:
 	tweener = get_tree().create_tween().bind_node(self)
 	var temp = [global_position,target_dir, directions[facing]]
-	print("Current Pos: %s  Target Pos: %s  Direction Facing: %s" % temp)
-	tweener.tween_property(self,"global_position",target_dir,.5)
+	#print("Current Pos: %s  Target Pos: %s  Direction Facing: %s" % temp)
+	tweener.tween_property(self,"global_position",target_dir,.1)
 	await tweener.finished
 
 func tween_rotate(mode:int)-> void:
@@ -64,11 +64,11 @@ func tween_rotate(mode:int)-> void:
 		mode = randi_range(1,3)
 	match mode:
 		1: 
-			tweener.tween_property(self, "rotation_degrees",rotation_degrees + Vector3(0, 90, 0), 0.5)
+			tweener.tween_property(self, "rotation_degrees",rotation_degrees + Vector3(0, 90, 0), 0.1)
 		2: 
-			tweener.tween_property(self, "rotation_degrees",rotation_degrees + Vector3(0, 180, 0), 0.5)
+			tweener.tween_property(self, "rotation_degrees",rotation_degrees + Vector3(0, 180, 0), 0.1)
 		3: 
-			tweener.tween_property(self, "rotation_degrees",rotation_degrees + Vector3(0, -90, 0), 0.5)
+			tweener.tween_property(self, "rotation_degrees",rotation_degrees + Vector3(0, -90, 0), 0.1)
 		0: return
 	await tweener.finished
 	

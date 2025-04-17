@@ -22,6 +22,7 @@ sky = SubResource("Sky_p57ef")
 [node name="Map" parent="GameScene" node_paths=PackedStringArray("player") instance=ExtResource("1_lnu2h")]
 bot = ExtResource("2_lbhrr")
 player = NodePath("../Player")
+map_size = Vector2i(20, 20)
 
 [node name="Player" parent="GameScene" instance=ExtResource("2_lnu2h")]
 
