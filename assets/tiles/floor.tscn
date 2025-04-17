@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://4dx7ctv1xyc6"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_iap3k"]
-size = Vector3(5, 0.5, 5)
-
-[node name="Floor" type="MeshInstance3D"]
-mesh = SubResource("BoxMesh_iap3k")

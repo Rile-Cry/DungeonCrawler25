@@ -6,13 +6,18 @@ class_name Player extends Node3D
 @export var moving_state : LimboState
 @export var turning_state : LimboState
 
+@export_category(&"Body References")
+@export var bot : Node3D
+
 var dir : Vector3
+var anim_player : AnimationPlayer
 var turn_dir : float
-var target_dir : Vector3i
+var target_dir : Vector3
 
 func _ready() -> void:
 	_init_state_machine()
-	MoveHandler.player = self
+	
+	anim_player = bot.find_child(&"AnimationPlayer")
 
 func _init_state_machine() -> void:	
 	# Idle State Transitions

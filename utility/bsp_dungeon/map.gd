@@ -3,10 +3,11 @@ extends Node3D
 @export var map : GridMap
 @export var player : Player
 
-var map_size := Vector2i(24, 24)
+var depth : int = 2
+var map_size := Vector2i(16, 16)
 var paths := []
 var root_node : Branch
-var tile_size : int = 3
+var tile_size : int = 2
 
 func _ready() -> void:
 	if map:
@@ -14,8 +15,9 @@ func _ready() -> void:
 	
 	map.cell_size = Vector3i(tile_size, tile_size, tile_size)
 	root_node = Branch.new(Vector2i(0, 0), Vector2i(map_size.x * tile_size, map_size.y * tile_size))
-	root_node.split(3, paths)
+	root_node.split(depth, paths)
 	generate_map()
+	_fill_wall()
 
 func generate_map() -> void:
 	var boss_room = _find_boss_room()
@@ -33,25 +35,20 @@ func generate_map() -> void:
 			for y in range(leaf.size.y):
 				if not is_inside_padding(x, y, leaf, padding):
 					map.set_cell_item(Vector3i(x + leaf.position.x, 0, y + leaf.position.y), 0)
-					
-					var map_pos := map.map_to_local(Vector3i(x + leaf.position.x, 0, y + leaf.position.y))
-					var pos := map.to_global(map_pos)
-					
-					_create_collider(pos)
 	
 	for path in paths:
 		if path['left'].y == path['right'].y:
 			for i in range(path['right'].x - path['left'].x):
-				_create_path_cell(path['left'], i, 5, true)
+				_create_path_cell(path['left'], i, 1, true)
 		else:
 			for i in range(path['right'].y - path['left'].y):
-				_create_path_cell(path['left'], i, 3)
+				_create_path_cell(path['left'], i, 1)
 	
 	var starter_pos := starter_room.get_center()
 	var map_pos := map.map_to_local(Vector3i(starter_pos.x, 0, starter_pos.y))
 	var pos := map.to_global(map_pos)
 	
-	player.global_position = pos + Vector3(0, 3, 0)
+	player.global_position = pos
 
 func is_inside_padding(x : int, y : int, leaf : Branch, padding : Vector4i) -> bool:
 	return x <= padding.x or y < padding.y or x >= leaf.size.x - padding.z or y >= leaf.size.y - padding.w
@@ -92,16 +89,25 @@ func _create_path_cell(pos: Vector2i, value: int = 0, path_width: int = 1, horiz
 		for i in range(path_width):
 			map.set_cell_item(Vector3i(pos.x + (i - disp), 0, pos.y + value), 0)
 
-func _create_collider(pos: Vector3) -> void:
-	var collider := StaticBody3D.new()
-	var shape := CollisionShape3D.new()
-	shape.shape = BoxShape3D.new()
-	shape.shape.size = Vector3(tile_size, tile_size, tile_size)
-	map.add_child(collider)
-	collider.global_position = pos + Vector3(0, tile_size / 2., 0)
-	collider.add_child(shape)
+func _fill_wall() -> void:
+	for x in range(map_size.x * tile_size + 1):
+		for y in range(map_size.x * tile_size + 1):
+			var map_pos := Vector3i(x, 0, y)
+			if map.get_cell_item(Vector3i(x, 0, y)) == -1:
+				_place_wall(map_pos)
 
-func _on_player_get_target(pos: Vector3, dir: Vector3) -> void:
-	var loc_pos := to_local(pos)
-	var map_pos = map.local_to_map(pos)
-	GameGlobalEvents.receive_target_pos.emit(to_global(map.map_to_local(map_pos + dir)))
+func _place_wall(pos: Vector3i) -> void:
+	var checked = false
+	var check_spots : Array[Vector3i] = [
+		Vector3i(pos.x - 1, pos.y, pos.z),
+		Vector3i(pos.x, pos.y, pos.z - 1),
+		Vector3i(pos.x + 1, pos.y, pos.z),
+		Vector3i(pos.x, pos.y, pos.z + 1)
+	]
+	
+	for spot in check_spots:
+		if map.get_cell_item(spot) == 0:
+			checked = true
+	
+	if checked:
+		map.set_cell_item(pos, 1)

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://t2k3robwy73l"
+uid="uid://dyrenfc0wm8ry"
 path.s3tc="res://.godot/imported/WalkerBot_Yellow.png-51abd87880211f785951c88e1a086aee.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "5e5ed3c78d3b1866b8ebdd16de25fa85"
+"md5": "e88bfe7864efce220e5ce289bde0b8ca"
 }
 
 [deps]

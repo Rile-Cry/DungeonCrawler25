@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://ccbprovahu30p"]
 
 [ext_resource type="Script" uid="uid://dusydvvn536hy" path="res://utility/bsp_dungeon/map.gd" id="1_yqjtg"]
-[ext_resource type="MeshLibrary" uid="uid://mvup2wau43ij" path="res://assets/tiles/library_test.tres" id="2_lbhrr"]
+[ext_resource type="MeshLibrary" uid="uid://cok6pue3pwryl" path="res://assets/tiles/library.tres" id="2_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://bi65u4cbgluxp" path="res://scenes/entities/player/player.tscn" id="2_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://cm0q1ohdkgg1e" path="res://assets/images/skybox/ringed_gas_giant_planet.png" id="4_lbhrr"]
 

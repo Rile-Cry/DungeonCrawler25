@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://fdvo7tfq35j7"]
+
+[ext_resource type="PackedScene" uid="uid://dty31saxted28" path="res://assets/models/env/ground1.glb" id="1_cjh6l"]
+[ext_resource type="PackedScene" uid="uid://bqqw3jik5upc4" path="res://assets/models/env/Building1tile.glb" id="2_eou7s"]
+
+[node name="Library" type="Node3D"]
+
+[node name="ground" parent="." instance=ExtResource("1_cjh6l")]
+
+[node name="wall" type="Node3D" parent="."]
+
+[node name="ground12" parent="wall" instance=ExtResource("1_cjh6l")]
+
+[node name="Building1tile" parent="wall" instance=ExtResource("2_eou7s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.144965, 0, -0.0269792)

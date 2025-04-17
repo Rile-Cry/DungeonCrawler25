@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://drr0dih3sdors"
-path="res://.godot/imported/WalkerBot.glb-a29f4dc816a8888b022d8aa1a7225884.scn"
+uid="uid://bvxlf1cd3o6ly"
+path="res://.godot/imported/Wall.gltf-5bf4dca3f9ab49e9625975628678e778.scn"
 
 [deps]
 
-source_file="res://assets/models/walker/WalkerBot.glb"
-dest_files=["res://.godot/imported/WalkerBot.glb-a29f4dc816a8888b022d8aa1a7225884.scn"]
+source_file="res://assets/tiles/Wall.gltf"
+dest_files=["res://.godot/imported/Wall.gltf-5bf4dca3f9ab49e9625975628678e778.scn"]
 
 [params]
 

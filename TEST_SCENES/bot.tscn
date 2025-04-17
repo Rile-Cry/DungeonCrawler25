@@ -24,34 +24,6 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array()
 
-[sub_resource type="Animation" id="Animation_lckyo"]
-resource_name = "BotWalk"
-length = 0.5
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Root")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, 0.5, 0, 0.3, 1, 0, 0.75, 0, 0.5, 1, 0, 0, 0)
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"advance"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_b5eeu"]
-length = 0.001
-
 [sub_resource type="Animation" id="Animation_8tawa"]
 resource_name = "BotTurn"
 length = 0.5
@@ -90,6 +62,34 @@ tracks/3/path = NodePath("Root")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, 0.5, 0, 0.3, 1, 0, 0.75, 0, 0.5, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_lckyo"]
+resource_name = "BotWalk"
+length = 0.5
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Root")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, 0.5, 0, 0.3, 1, 0, 0.75, 0, 0.5, 1, 0, 0, 0)
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"advance"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_b5eeu"]
+length = 0.001
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b5eeu"]
 _data = {
