@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2g4yctd4qk1f"]
+
+[ext_resource type="Script" uid="uid://dusydvvn536hy" path="res://utility/bsp_dungeon/map.gd" id="1_paxxb"]
+[ext_resource type="MeshLibrary" uid="uid://mvup2wau43ij" path="res://assets/tiles/library_test.tres" id="2_gldc4"]
+
+[node name="Map" type="Node3D" node_paths=PackedStringArray("map", "player")]
+script = ExtResource("1_paxxb")
+map = NodePath("GridMap")
+player = NodePath("")
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("2_gldc4")
+cell_size = Vector3(3, 3, 3)
+cell_center_y = false

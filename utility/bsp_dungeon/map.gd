@@ -1,7 +1,9 @@
-extends Node3D
+class_name Map extends Node3D
 
 @export var map : GridMap
+@export var bot : PackedScene
 @export var player : Player
+#@export var bot : Bot
 
 var depth : int = 2
 var map_size := Vector2i(16, 16)
@@ -53,6 +55,17 @@ func generate_map() -> void:
 func is_inside_padding(x : int, y : int, leaf : Branch, padding : Vector4i) -> bool:
 	return x <= padding.x or y < padding.y or x >= leaf.size.x - padding.z or y >= leaf.size.y - padding.w
 
+func spawn_boss(b:Branch) -> void:
+	var boss = bot.instantiate()
+	var boss_pos := b.get_center()
+	var map_pos := map.map_to_local(Vector3i(boss_pos.x, 0, boss_pos.y))
+	var pos := map.to_global(map_pos)
+	
+	boss.global_position = pos + Vector3(0, 3, 0)
+	
+	add_child(boss)
+	boss.add_to_group("boss")
+
 func _find_boss_room() -> Branch:
 	var largest_room : Branch
 	var i : int = 0
@@ -64,7 +77,7 @@ func _find_boss_room() -> Branch:
 				largest_room = leaf
 		else:
 			largest_room = leaf
-	
+			
 	return largest_room
 				
 

@@ -1,7 +1,5 @@
 [gd_scene load_steps=8 format=3 uid="uid://ccbprovahu30p"]
 
-[ext_resource type="Script" uid="uid://dusydvvn536hy" path="res://utility/bsp_dungeon/map.gd" id="1_yqjtg"]
-[ext_resource type="MeshLibrary" uid="uid://cok6pue3pwryl" path="res://assets/tiles/library.tres" id="2_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://d2g4yctd4qk1f" path="res://scenes/map.tscn" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://d1xg47mwvifgq" path="res://TEST_SCENES/bot.tscn" id="2_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://bi65u4cbgluxp" path="res://scenes/entities/player/player.tscn" id="2_lnu2h"]

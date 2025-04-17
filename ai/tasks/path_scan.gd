@@ -1,23 +1,9 @@
 @tool
 extends BTAction
 
+## Blackboard variable that stores our open_path (Array of ints)
+@export var open_paths: StringName = &"open_paths"
 
-## Scan Ahead: Success is returned when there is an empty result ahead, Failure when we have found collision.
-
-## Blackboard variable that stores our scanning_result (Bool)
-@export var scanning_wall: StringName = &"scanning_wall"
-
-#
-#func _enter() -> void:
-	#
-	#var scan : bool = blackboard.get_var(scanning_wall, null)
-	#if !is_instance_valid(scan):
-		#blackboard.get_var(scanning_wall,agent.wall_bonk())
-		#
-
-
-func _tick(delta: float) -> Status:
-	# Continue down the line until we DO bonk
-	if agent.wall_bonk():
-		return FAILURE
-	else : return SUCCESS
+func _enter() -> void:
+	var temp = agent.path_search()
+	blackboard.set_var(open_paths,temp)
