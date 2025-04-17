@@ -12,7 +12,6 @@ var target_dir : Vector3i
 
 func _ready() -> void:
 	_init_state_machine()
-	MoveHandler.player = self
 
 func _init_state_machine() -> void:	
 	# Idle State Transitions

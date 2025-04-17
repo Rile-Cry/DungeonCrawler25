@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://d1xg47mwvifgq"]
+[gd_scene load_steps=16 format=3 uid="uid://d1xg47mwvifgq"]
 
 [ext_resource type="Script" uid="uid://cqgodvllic4t4" path="res://TEST_SCENES/bot.gd" id="1_lckyo"]
 [ext_resource type="BehaviorTree" uid="uid://c00xr2o8jwmcn" path="res://ai/trees/Walker_AI.tres" id="2_lckyo"]
+[ext_resource type="Script" uid="uid://dyyhxxmge0mji" path="res://TEST_SCENES/camera_3d.gd" id="3_b5eeu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mhd46"]
 
@@ -12,6 +13,18 @@ albedo_color = Color(0.584847, 0.0558272, 0.102077, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_b5eeu"]
 material = SubResource("StandardMaterial3D_b5eeu")
+
+[sub_resource type="Animation" id="Animation_8bj0o"]
+resource_name = "BotIdle"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Root")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, 0, 0)
 
 [sub_resource type="Animation" id="Animation_n18ty"]
 resource_name = "BotScan"
@@ -36,7 +49,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array()
 tracks/1/type = "method"
 tracks/1/imported = false
-tracks/1/enabled = true
+tracks/1/enabled = false
 tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
@@ -85,7 +98,7 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
-"method": &"advance"
+"method": &"move_bot"
 }]
 }
 
@@ -99,18 +112,6 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
 
-[sub_resource type="Animation" id="Animation_8bj0o"]
-resource_name = "BotIdle"
-length = 0.1
-loop_mode = 1
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Root")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, 0, 0)
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b5eeu"]
 _data = {
 &"BotIdle": SubResource("Animation_8bj0o"),
@@ -121,6 +122,8 @@ _data = {
 }
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vb233"]
+
+[sub_resource type="Theme" id="Theme_n18ty"]
 
 [node name="Bot" type="CharacterBody3D" node_paths=PackedStringArray("ray_box")]
 disable_mode = 2
@@ -147,6 +150,7 @@ autoplay = "BotIdle"
 playback_default_blend_time = 0.1
 
 [node name="RayDar" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="FrontRay" type="RayCast3D" parent="RayDar"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
@@ -177,3 +181,61 @@ hit_from_inside = true
 [node name="BTPlayer" type="BTPlayer" parent="."]
 behavior_tree = ExtResource("2_lckyo")
 blackboard_plan = SubResource("BlackboardPlan_vb233")
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("bot", "facing", "current_dir", "bot_rotation", "bot_g_rotation", "bot_l_rotation")]
+transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 5.92638, 2)
+current = true
+script = ExtResource("3_b5eeu")
+bot = NodePath("..")
+facing = NodePath("CanvasLayer/Control/VBoxContainer/Facing")
+current_dir = NodePath("CanvasLayer/Control/VBoxContainer/current_dir")
+bot_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot_rotation")
+bot_g_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot _g_rot")
+bot_l_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot_l_rot")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
+follow_viewport_enabled = true
+
+[node name="Control" type="Control" parent="Camera3D/CanvasLayer"]
+custom_minimum_size = Vector2(300, 90)
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/CanvasLayer/Control"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 0
+offset_right = 638.0
+offset_bottom = 132.0
+
+[node name="Facing" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 25)
+layout_mode = 2
+theme = SubResource("Theme_n18ty")
+theme_override_font_sizes/normal_font_size = 16
+
+[node name="current_dir" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 25)
+layout_mode = 2
+theme = SubResource("Theme_n18ty")
+theme_override_font_sizes/normal_font_size = 16
+
+[node name="bot_rotation" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 25)
+layout_mode = 2
+theme = SubResource("Theme_n18ty")
+theme_override_font_sizes/normal_font_size = 16
+
+[node name="bot _g_rot" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 25)
+layout_mode = 2
+theme = SubResource("Theme_n18ty")
+theme_override_font_sizes/normal_font_size = 16
+
+[node name="bot_l_rot" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 25)
+layout_mode = 2
+theme = SubResource("Theme_n18ty")
+theme_override_font_sizes/normal_font_size = 16

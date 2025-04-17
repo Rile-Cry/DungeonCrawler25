@@ -1,14 +1,13 @@
 @tool
 extends BTAction
 
-# Called each time this task is ticked (aka executed).
-func _tick(_delta: float) -> Status:
-	
-	var paths = blackboard.get_var(&"open_paths",null)
-	var dir : int
-	if paths[0] == 0:
-		agent.advance()
-	else : agent.tween_rotate(randi_range(paths[0],(paths.size()-1)))
-	if elapsed_time > .5:
-		return SUCCESS
-	return RUNNING
+@export var open_paths : StringName = &"open_paths"
+
+func _enter() -> void:
+	var pick_a_dir = blackboard.get_var(open_paths,null)
+	agent.move_bot(pick_a_dir[randi_range(0,pick_a_dir.size()-1)])
+
+func _tick(delta: float) -> Status:
+	if elapsed_time < .5:
+		return RUNNING
+	else : return SUCCESS

@@ -29,24 +29,20 @@ size = Vector3(5, 0.5, 5)
 [node name="BasicBehaviors" type="Node3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
-[node name="Bot" parent="." instance=ExtResource("1_8jqo6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="Camera3D2" type="Camera3D" parent="Bot" node_paths=PackedStringArray("bot", "facing", "current_dir", "bot_rotation", "bot_g_rotation", "bot_l_rotation")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1, 5.92638, -4.37114e-08)
-current = true
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("bot", "facing", "current_dir", "bot_rotation", "bot_g_rotation", "bot_l_rotation")]
+transform = Transform3D(0.87968, 0.400049, -0.257145, -0.09404, 0.676366, 0.730538, 0.466175, -0.618458, 0.632606, -1.42645, 5.03975, 3.53531)
 script = ExtResource("1_m74h1")
-bot = NodePath("..")
+bot = NodePath("../Bot")
 facing = NodePath("CanvasLayer/Control/VBoxContainer/Facing")
 current_dir = NodePath("CanvasLayer/Control/VBoxContainer/current_dir")
 bot_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot_rotation")
 bot_g_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot _g_rot")
 bot_l_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot_l_rot")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Bot/Camera3D2"]
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
 follow_viewport_enabled = true
 
-[node name="Control" type="Control" parent="Bot/Camera3D2/CanvasLayer"]
+[node name="Control" type="Control" parent="Camera3D/CanvasLayer"]
 custom_minimum_size = Vector2(300, 90)
 layout_mode = 3
 anchors_preset = 0
@@ -54,41 +50,44 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Bot/Camera3D2/CanvasLayer/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/CanvasLayer/Control"]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 0
 offset_right = 638.0
 offset_bottom = 132.0
 
-[node name="Facing" type="RichTextLabel" parent="Bot/Camera3D2/CanvasLayer/Control/VBoxContainer"]
+[node name="Facing" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(400, 25)
 layout_mode = 2
 theme = SubResource("Theme_m74h1")
 theme_override_font_sizes/normal_font_size = 16
 
-[node name="current_dir" type="RichTextLabel" parent="Bot/Camera3D2/CanvasLayer/Control/VBoxContainer"]
+[node name="current_dir" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(400, 25)
 layout_mode = 2
 theme = SubResource("Theme_m74h1")
 theme_override_font_sizes/normal_font_size = 16
 
-[node name="bot_rotation" type="RichTextLabel" parent="Bot/Camera3D2/CanvasLayer/Control/VBoxContainer"]
+[node name="bot_rotation" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(400, 25)
 layout_mode = 2
 theme = SubResource("Theme_m74h1")
 theme_override_font_sizes/normal_font_size = 16
 
-[node name="bot _g_rot" type="RichTextLabel" parent="Bot/Camera3D2/CanvasLayer/Control/VBoxContainer"]
+[node name="bot _g_rot" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(400, 25)
 layout_mode = 2
 theme = SubResource("Theme_m74h1")
 theme_override_font_sizes/normal_font_size = 16
 
-[node name="bot_l_rot" type="RichTextLabel" parent="Bot/Camera3D2/CanvasLayer/Control/VBoxContainer"]
+[node name="bot_l_rot" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(400, 25)
 layout_mode = 2
 theme = SubResource("Theme_m74h1")
 theme_override_font_sizes/normal_font_size = 16
+
+[node name="Bot" parent="." instance=ExtResource("1_8jqo6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707107, 6.21891e-08, 0.707107, -0.183013, -0.965926, 0.183013, 0.683013, -0.258819, -0.683013, -3, 3.86375, -1.31134e-07)
@@ -416,6 +415,6 @@ shape = SubResource("BoxShape3D_5kfji")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 8.35187e-23, 0, 1, 3, -1.31134e-07, 1.31134e-07)
 mesh = SubResource("BoxMesh_m74h1")
 
-[node name="Map" parent="." instance=ExtResource("3_5kfji")]
-bot = Object(CharacterBody3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"disable_mode":2,"collision_layer":1,"collision_mask":1,"collision_priority":1.0,"input_ray_pickable":true,"input_capture_on_drag":false,"axis_lock_linear_x":false,"axis_lock_linear_y":false,"axis_lock_linear_z":false,"axis_lock_angular_x":false,"axis_lock_angular_y":false,"axis_lock_angular_z":false,"motion_mode":0,"up_direction":Vector3(0, 1, 0),"slide_on_ceiling":true,"velocity":Vector3(0, 0, 0),"max_slides":6,"wall_min_slide_angle":0.261799,"floor_stop_on_slope":true,"floor_constant_speed":false,"floor_block_on_wall":true,"floor_max_angle":0.785398,"floor_snap_length":0.1,"platform_on_leave":0,"platform_floor_layers":4294967295,"platform_wall_layers":0,"safe_margin":0.001,"script":Resource("res://TEST_SCENES/bot.gd"),"ray_box":null)
+[node name="Node3D" type="Node3D" parent="."]
 
+[node name="Map" parent="Node3D" instance=ExtResource("3_5kfji")]

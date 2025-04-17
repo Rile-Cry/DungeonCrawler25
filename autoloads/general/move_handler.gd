@@ -1,18 +1,21 @@
 extends Node
 
 var map : GridMap
-var player : Player
 
 func move_body(body: Node3D) -> void:
 	var rot := body.rotation.y
 	var new_dir = body.dir.rotated(Vector3(0, 1, 0), rot)
-	var map_pos = grab_tile_position(player.global_position)
+	var map_pos = grab_tile_position(body.global_position)
 	map_pos += Vector3i(new_dir)
 	if "target_dir" in body:
 		if map.get_cell_item(map_pos + Vector3i(0, -1, 0)) > -1:
-			body.target_dir = grab_tile_global_position(map_pos)
+			print(body.target_dir)
+			var offset : int = .5 if (int(map.cell_size.x) % 2 == 1) else 0
+			body.target_dir = grab_tile_global_position(map_pos) + Vector3(offset, 0, offset)
 		else:
-			body.target_dir = player.global_position
+			print(body.global_position)
+			body.target_dir = body.global_position
+			print("we really should have stopped here")
 	else:
 		push_warning("There is no variable 'target_dir' in " + body.name)
 

@@ -1,9 +1,11 @@
 class_name Map extends Node3D
 
 @export var map : GridMap
+@export var bot : PackedScene
 @export var player : Player
+#@export var bot : Bot
 
-var map_size := Vector2i(24, 24)
+@export var map_size := Vector2i(6, 6)
 var paths := []
 var root_node : Branch
 var tile_size : int = 3
@@ -14,7 +16,8 @@ func _ready() -> void:
 	
 	map.cell_size = Vector3i(tile_size, tile_size, tile_size)
 	root_node = Branch.new(Vector2i(0, 0), Vector2i(map_size.x * tile_size, map_size.y * tile_size))
-	root_node.split(3, paths)
+	#root_node.split(3, paths)
+	root_node.split(0, paths)
 	generate_map()
 
 func generate_map() -> void:
@@ -51,10 +54,23 @@ func generate_map() -> void:
 	var map_pos := map.map_to_local(Vector3i(starter_pos.x, 0, starter_pos.y))
 	var pos := map.to_global(map_pos)
 	
-	player.global_position = pos + Vector3(0, 3, 0)
+	#player.global_position = pos + Vector3(0, 3, 0)
+	#bot.global_position = pos + Vector3(0, 3, 0)
+	spawn_boss(boss_room)
 
 func is_inside_padding(x : int, y : int, leaf : Branch, padding : Vector4i) -> bool:
 	return x <= padding.x or y < padding.y or x >= leaf.size.x - padding.z or y >= leaf.size.y - padding.w
+
+func spawn_boss(b:Branch) -> void:
+	var boss = bot.instantiate()
+	var boss_pos := b.get_center()
+	var map_pos := map.map_to_local(Vector3i(boss_pos.x, 0, boss_pos.y))
+	var pos := map.to_global(map_pos)
+	
+	boss.global_position = pos + Vector3(0, 3, 0)
+	
+	add_child(boss)
+	boss.add_to_group("boss")
 
 func _find_boss_room() -> Branch:
 	var largest_room : Branch
@@ -67,7 +83,7 @@ func _find_boss_room() -> Branch:
 				largest_room = leaf
 		else:
 			largest_room = leaf
-	
+			
 	return largest_room
 				
 
@@ -100,8 +116,3 @@ func _create_collider(pos: Vector3) -> void:
 	map.add_child(collider)
 	collider.global_position = pos + Vector3(0, tile_size / 2., 0)
 	collider.add_child(shape)
-
-func _on_player_get_target(pos: Vector3, dir: Vector3) -> void:
-	var loc_pos := to_local(pos)
-	var map_pos = map.local_to_map(pos)
-	GameGlobalEvents.receive_target_pos.emit(to_global(map.map_to_local(map_pos + dir)))

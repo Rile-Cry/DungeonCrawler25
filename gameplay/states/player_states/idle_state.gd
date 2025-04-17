@@ -10,7 +10,7 @@ func _update(delta: float) -> void:
 	if not dir.is_zero_approx():
 		if "dir" in owner:
 			owner.dir = Vector3(dir.x, 0, dir.y)
-			MoveHandler.move_player()
+			MoveHandler.move_body(owner)
 			if Vector3(owner.target_dir) != owner.global_position:
 				dispatch(&"moving")
 	
