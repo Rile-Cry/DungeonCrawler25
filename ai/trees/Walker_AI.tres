@@ -29,7 +29,7 @@ duration = 0.5
 
 [sub_resource type="BTAction" id="BTAction_otxdf"]
 script = ExtResource("3_jikak")
-open_paths = null
+open_paths = &"open_paths"
 
 [sub_resource type="BTSequence" id="BTSequence_xd8ps"]
 custom_name = "MoveRunner"

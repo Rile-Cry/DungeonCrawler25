@@ -9,14 +9,14 @@ var depth : int = 2
 var map_size := Vector2i(16, 16)
 var paths := []
 var root_node : Branch
-var tile_size : int = 2
+var tile_size : int = 3
 
 func _ready() -> void:
 	if map:
 		MoveHandler.map = map
 	
 	map.cell_size = Vector3i(tile_size, tile_size, tile_size)
-	root_node = Branch.new(Vector2i(0, 0), Vector2i(map_size.x * tile_size, map_size.y * tile_size))
+	root_node = Branch.new(Vector2i(0, 0), Vector2i(map_size.x * depth, map_size.y * depth))
 	root_node.split(depth, paths)
 	generate_map()
 	_fill_wall()
