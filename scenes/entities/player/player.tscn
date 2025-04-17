@@ -2,27 +2,28 @@
 
 [ext_resource type="Script" uid="uid://c3jgie06mlnjx" path="res://scenes/entities/player/player.gd" id="1_635qg"]
 [ext_resource type="Script" uid="uid://q6dwvy4wu8p" path="res://gameplay/components/health_component.gd" id="2_bj7e2"]
+[ext_resource type="PackedScene" uid="uid://ur4x8bblrfh5" path="res://scenes/entities/player/walker_bot.tscn" id="3_8akj5"]
 [ext_resource type="Script" uid="uid://c7g1criqmwxaa" path="res://gameplay/states/player_states/turning_state.gd" id="5_bjvvg"]
 [ext_resource type="Script" uid="uid://rjtvlthl4kw1" path="res://gameplay/states/player_states/idle_state.gd" id="8_1murt"]
 [ext_resource type="Script" uid="uid://cw8m3meedjdjq" path="res://gameplay/states/player_states/moving_state.gd" id="9_5sj0x"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_yel1f"]
-
-[node name="Player" type="Node3D" node_paths=PackedStringArray("hsm", "idle_state", "moving_state", "turning_state")]
+[node name="Player" type="Node3D" node_paths=PackedStringArray("hsm", "idle_state", "moving_state", "turning_state", "bot")]
 script = ExtResource("1_635qg")
 hsm = NodePath("LimboHSM")
 idle_state = NodePath("LimboHSM/IdleState")
 moving_state = NodePath("LimboHSM/MovingState")
 turning_state = NodePath("LimboHSM/TurningState")
+bot = NodePath("WalkerBot")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("2_bj7e2")
 hp = 5
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_yel1f")
+[node name="WalkerBot" parent="." instance=ExtResource("3_8akj5")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, -0.4)
 
 [node name="LimboHSM" type="LimboHSM" parent="."]
 

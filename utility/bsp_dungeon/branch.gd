@@ -19,7 +19,7 @@ func get_leaves() -> Array[Branch]:
 		return left_child.get_leaves() + right_child.get_leaves()
 
 func split(remaining : int, paths: Array) -> void:
-	var split_percent := GameGlobal.rng.randf_range(0.3, 0.7)
+	var split_percent := GameGlobal.rng.randf_range(0.3, 0.6)
 	var split_horizontal := size.y >= size.x
 	
 	if split_horizontal:
