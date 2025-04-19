@@ -4,6 +4,8 @@ var left_child : Branch
 var right_child : Branch
 var position : Vector2i
 var size : Vector2i
+var room : Vector4i
+var padding : int = 4
 
 func _init(pos: Vector2i, siz: Vector2i) -> void:
 	self.position = pos
@@ -40,5 +42,13 @@ func split(remaining : int, paths: Array) -> void:
 	if remaining > 0:
 		left_child.split(remaining - 1, paths)
 		right_child.split(remaining - 1, paths)
+	else:
+		for child in [left_child, right_child]:
+			var size = child.size
+			var pos = child.position
+			child.room.z = GameGlobal.rng.randi_range(size.x - padding, size.x)
+			child.room.w = GameGlobal.rng.randi_range(size.y - padding, size.y)
+			child.room.x = GameGlobal.rng.randi_range(pos.x, pos.x + (size.x - child.room.z))
+			child.room.y = GameGlobal.rng.randi_range(pos.y, pos.y + (size.y - child.room.y))
 	
 	paths.push_back({'left': left_child.get_center(), 'right': right_child.get_center()})

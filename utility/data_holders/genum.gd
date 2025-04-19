@@ -8,6 +8,9 @@ enum BusID {
 	AMBIENT
 }
 
-enum DungeonTileType {
-	EMPTY
+enum DungeonRoomType {
+	BOSS,
+	STARTING,
+	ENEMY,
+	SAFE
 }

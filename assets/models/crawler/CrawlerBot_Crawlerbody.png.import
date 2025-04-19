@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpiq63kk86lk7"
-path.s3tc="res://.godot/imported/plain_starfield_1.png-26bacc8b3b29a91a1d51bbd8835a6745.s3tc.ctex"
+uid="uid://ci5omntp0mjh8"
+path.s3tc="res://.godot/imported/CrawlerBot_Crawlerbody.png-d3568ec139adc9edeb909b1ae7c94631.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "b3480cc2b66994b65dba00327cc6368f"
+}
 
 [deps]
 
-source_file="res://assets/images/skybox/plain_starfield_1.png"
-dest_files=["res://.godot/imported/plain_starfield_1.png-26bacc8b3b29a91a1d51bbd8835a6745.s3tc.ctex"]
+source_file="res://assets/models/crawler/CrawlerBot_Crawlerbody.png"
+dest_files=["res://.godot/imported/CrawlerBot_Crawlerbody.png-d3568ec139adc9edeb909b1ae7c94631.s3tc.ctex"]
 
 [params]
 

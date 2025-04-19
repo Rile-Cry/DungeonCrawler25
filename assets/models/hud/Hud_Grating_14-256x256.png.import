@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpiq63kk86lk7"
-path.s3tc="res://.godot/imported/plain_starfield_1.png-26bacc8b3b29a91a1d51bbd8835a6745.s3tc.ctex"
+uid="uid://chb6ttk8e3tfl"
+path.s3tc="res://.godot/imported/Hud_Grating_14-256x256.png-b5d3b9d7df42968d9f5a6b3c366b9973.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "e6a723f6c60493bea081fbb04c47d50b"
+}
 
 [deps]
 
-source_file="res://assets/images/skybox/plain_starfield_1.png"
-dest_files=["res://.godot/imported/plain_starfield_1.png-26bacc8b3b29a91a1d51bbd8835a6745.s3tc.ctex"]
+source_file="res://assets/models/hud/Hud_Grating_14-256x256.png"
+dest_files=["res://.godot/imported/Hud_Grating_14-256x256.png-b5d3b9d7df42968d9f5a6b3c366b9973.s3tc.ctex"]
 
 [params]
 

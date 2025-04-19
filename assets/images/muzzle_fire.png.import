@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpiq63kk86lk7"
-path.s3tc="res://.godot/imported/plain_starfield_1.png-26bacc8b3b29a91a1d51bbd8835a6745.s3tc.ctex"
+uid="uid://bsanrt76dqash"
+path.s3tc="res://.godot/imported/muzzle_fire.png-08d43ffd86a5b0446a78a3006cb14801.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/images/skybox/plain_starfield_1.png"
-dest_files=["res://.godot/imported/plain_starfield_1.png-26bacc8b3b29a91a1d51bbd8835a6745.s3tc.ctex"]
+source_file="res://assets/images/muzzle_fire.png"
+dest_files=["res://.godot/imported/muzzle_fire.png-08d43ffd86a5b0446a78a3006cb14801.s3tc.ctex"]
 
 [params]
 

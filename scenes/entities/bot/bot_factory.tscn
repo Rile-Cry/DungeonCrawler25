@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://dla78280d3dbq"]
+
+[ext_resource type="Script" uid="uid://dloeu8a33f476" path="res://scenes/entities/bot/bot_factory.gd" id="1_ocls7"]
+[ext_resource type="PackedScene" uid="uid://d1xg47mwvifgq" path="res://TEST_SCENES/bot.tscn" id="2_5fse5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_u6aa0"]
+size = Vector3(2, 2, 2)
+
+[node name="BotFactory" type="Node3D"]
+script = ExtResource("1_ocls7")
+bot_scene = ExtResource("2_5fse5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_u6aa0")
