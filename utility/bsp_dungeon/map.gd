@@ -12,23 +12,21 @@ var paths := []
 var root_node : Branch
 var tile_size : int = 3
 
+var two_d_map : Array[Vector2i]
+
 func _ready() -> void:
 	if map:
 		MoveHandler.map = map
-	
-	map.cell_size = Vector3i(tile_size, tile_size, tile_size)
-	root_node = Branch.new(Vector2i(0, 0), Vector2i(map_size.x * tile_size, map_size.y * tile_size))
-	root_node.split(3, paths)
-	#sroot_node.split(0, paths)
-	generate_map()
-	var loop = 0
-	while loop < 10:
-		spawn_boss(boss_loc)
-		loop +=1
+
 	root_node = Branch.new(Vector2i(0, 0), Vector2i(map_size.x * depth, map_size.y * depth))
 	root_node.split(depth, paths)
 	generate_map()
 	_fill_wall()
+	spawn_boss(boss_loc)
+	#var loop = 0
+	#while loop < 15:
+		#spawn_boss(boss_loc)
+		#loop +=1
 
 func generate_map() -> void:
 	var boss_room = _find_boss_room()
@@ -47,6 +45,7 @@ func generate_map() -> void:
 			for y in range(leaf.size.y):
 				if not is_inside_padding(x, y, leaf, padding):
 					map.set_cell_item(Vector3i(x + leaf.position.x, 0, y + leaf.position.y), 0)
+					two_d_map.append(Vector2i(x,y))
 	
 	for path in paths:
 		if path['left'].y == path['right'].y:
@@ -60,7 +59,8 @@ func generate_map() -> void:
 	var map_pos := map.map_to_local(Vector3i(starter_pos.x, 0, starter_pos.y))
 	var pos := map.to_global(map_pos)
 	
-	#player.global_position = pos
+	player.global_position = pos
+	
 func is_inside_padding(x : int, y : int, leaf : Branch, padding : Vector4i) -> bool:
 	return x <= padding.x or y < padding.y or x >= leaf.size.x - padding.z or y >= leaf.size.y - padding.w
 
@@ -70,7 +70,7 @@ func spawn_boss(b:Branch) -> void:
 	var map_pos := map.map_to_local(Vector3i(boss_pos.x, 0, boss_pos.y))
 	var pos := map.to_global(map_pos)
 	
-	boss.global_position = pos + Vector3(0, 3, 0)
+	boss.global_position = pos + Vector3(0,100,0)
 	
 	add_child(boss)
 	boss.add_to_group("boss")

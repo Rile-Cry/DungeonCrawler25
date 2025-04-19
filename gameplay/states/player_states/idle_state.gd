@@ -2,7 +2,8 @@ extends LimboState
 
 func _enter() -> void:
 	if owner.anim_player:
-		owner.anim_player.play(&"walkeridle")
+		#owner.anim_player.play(&"walkeridle")
+		pass
 
 func _update(delta: float) -> void:
 	var dir := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_backward")

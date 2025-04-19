@@ -23,7 +23,12 @@ func get_pos() -> Vector3:
 
 func update_facing(to_face:int) -> void:
 	dir = directions[to_face]
-	
+
+func drop_in() -> void:
+	var landing = global_position - Vector3(0,100,0)
+	tweener= get_tree().create_tween().bind_node(self).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tweener.tween_property(self,"global_position",landing,3)
+
 func wall_bonk() -> bool:
 	if rays[0].is_colliding() :
 		return true
@@ -53,22 +58,21 @@ func tween_translate(facing:int) -> void:
 	tweener = get_tree().create_tween().bind_node(self)
 	var temp = [global_position,target_dir, directions[facing]]
 	#print("Current Pos: %s  Target Pos: %s  Direction Facing: %s" % temp)
-	tweener.tween_property(self,"global_position",target_dir,.1)
+	tweener.tween_property(self,"global_position",target_dir,1.5)
 	await tweener.finished
 
 func tween_rotate(mode:int)-> void:
 	if mode == 0 : return
 	tweener = get_tree().create_tween().bind_node(self).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_IN_OUT)
-	## 90 == LEFT, 180 == BACK, -90 == RIGHT
+	## -90 == RIGHT, 180 == BACK, 90 == LEFT
 	if mode == 4:
 		mode = randi_range(1,3)
 	match mode:
 		1: 
-			tweener.tween_property(self, "rotation_degrees",rotation_degrees + Vector3(0, 90, 0), 0.1)
+			tweener.tween_property(self, "rotation_degrees",rotation_degrees + Vector3(0, -90, 0), 1.5)
 		2: 
-			tweener.tween_property(self, "rotation_degrees",rotation_degrees + Vector3(0, 180, 0), 0.1)
+			tweener.tween_property(self, "rotation_degrees",rotation_degrees + Vector3(0, 180, 0), 1.5)
 		3: 
-			tweener.tween_property(self, "rotation_degrees",rotation_degrees + Vector3(0, -90, 0), 0.1)
+			tweener.tween_property(self, "rotation_degrees",rotation_degrees + Vector3(0, 90, 0), 1.5)
 		0: return
 	await tweener.finished
-	

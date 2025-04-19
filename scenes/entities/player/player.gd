@@ -18,6 +18,9 @@ func _ready() -> void:
 	_init_state_machine()
 	
 	anim_player = bot.find_child(&"AnimationPlayer")
+	anim_player.speed_scale = 2
+	self.add_to_group("player")
+	
 
 func _init_state_machine() -> void:	
 	# Idle State Transitions

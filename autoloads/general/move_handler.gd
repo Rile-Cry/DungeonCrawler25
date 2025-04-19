@@ -27,3 +27,9 @@ func grab_tile_position(g_pos: Vector3) -> Vector3i:
 func grab_tile_global_position(t_pos: Vector3i) -> Vector3:
 	var l_pos := map.map_to_local(t_pos)
 	return map.to_global(l_pos)
+
+func get_2d_map() -> Array[Vector2i]:
+	var temp : Array[Vector2i] 
+	for cell in MoveHandler.map.get_used_cells():
+		temp.append(Vector2i(cell.x,cell.z))
+	return temp

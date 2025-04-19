@@ -1,22 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://d1xg47mwvifgq"]
+[gd_scene load_steps=8 format=3 uid="uid://d1xg47mwvifgq"]
 
 [ext_resource type="Script" uid="uid://cqgodvllic4t4" path="res://TEST_SCENES/bot.gd" id="1_lckyo"]
 [ext_resource type="BehaviorTree" uid="uid://c00xr2o8jwmcn" path="res://ai/trees/Walker_AI.tres" id="2_lckyo"]
 [ext_resource type="PackedScene" uid="uid://kb8ukdv50gqr" path="res://assets/models/enemies/enemy_bot.tscn" id="2_n18ty"]
 [ext_resource type="Script" uid="uid://dyyhxxmge0mji" path="res://TEST_SCENES/camera_3d.gd" id="3_b5eeu"]
-[ext_resource type="Shader" uid="uid://cqg8eank0t6ok" path="res://assets/shaders/ps_one.gdshader" id="5_8bj0o"]
-[ext_resource type="Script" uid="uid://b7w7350b465rq" path="res://TEST_SCENES/2d_path_map.gd" id="5_8tawa"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mhd46"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vb233"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tgl1r"]
-shader = ExtResource("5_8bj0o")
-shader_parameter/enabled = true
-shader_parameter/dithering = true
-shader_parameter/colors = 12
-shader_parameter/dither_size = 5
 
 [sub_resource type="Theme" id="Theme_n18ty"]
 
@@ -33,77 +24,74 @@ debug_color = Color(0.92549, 0, 0.368627, 1)
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="WalkerBot/metarig" index="0"]
-bones/0/position = Vector3(8.89097e-10, 0.449475, -0.032459)
-bones/0/rotation = Quaternion(0.0825313, 1.18802e-07, -9.84128e-09, 0.996588)
-bones/1/position = Vector3(-1.22278e-12, 0.371632, 0.000536034)
-bones/1/rotation = Quaternion(0.000475027, -7.07358e-14, -8.89069e-11, 1)
-bones/2/position = Vector3(0.56628, 0.548087, 0.0135826)
-bones/2/rotation = Quaternion(0.999999, 1.7078e-05, 5.47789e-05, 0.00108721)
-bones/3/rotation = Quaternion(-0.751722, -4.40988e-05, -3.93919e-05, 0.65948)
-bones/4/rotation = Quaternion(-0.221783, -4.9902e-08, 4.50699e-06, 0.975096)
-bones/8/position = Vector3(-0.56628, 0.548087, 0.0135824)
-bones/8/rotation = Quaternion(0.999999, -1.70787e-05, -5.45423e-05, 0.00108721)
-bones/9/rotation = Quaternion(-0.743885, 4.5194e-05, 3.88363e-05, 0.668308)
-bones/13/rotation = Quaternion(0.875164, -7.58229e-08, 2.02315e-07, 0.483827)
-bones/13/scale = Vector3(1, 1.00001, 1.00002)
-bones/14/rotation = Quaternion(0.967785, -1.71137e-09, 1.05461e-07, 0.251779)
-bones/14/scale = Vector3(1, 0.999991, 1.00002)
-bones/15/rotation = Quaternion(-0.75004, -2.89075e-08, -1.46036e-07, 0.661393)
-bones/17/rotation = Quaternion(0.661393, 2.40624e-12, 1.57685e-07, 0.75004)
-bones/21/rotation = Quaternion(0.875164, -1.91176e-07, -6.34324e-09, 0.483827)
-bones/21/scale = Vector3(1, 1.00001, 1.00002)
-bones/22/rotation = Quaternion(0.967785, -1.7107e-09, -3.56021e-07, 0.251779)
-bones/22/scale = Vector3(1, 0.999992, 1.00002)
+bones/0/position = Vector3(0, 0.875465, -0.0361982)
+bones/1/position = Vector3(-1.24261e-12, 0.374815, 5.21187e-06)
+bones/2/position = Vector3(0.715904, 0.548093, 0.013599)
+bones/2/rotation = Quaternion(0.978293, 9.88471e-06, 5.65271e-05, -0.207228)
+bones/3/rotation = Quaternion(-0.32353, -4.6892e-05, -8.2085e-06, 0.946218)
+bones/4/rotation = Quaternion(-0.166448, -4.61858e-08, 2.52342e-06, 0.98605)
+bones/8/position = Vector3(-0.715904, 0.548093, 0.0135986)
+bones/8/rotation = Quaternion(0.984789, -1.17567e-05, -5.59261e-05, -0.173754)
+bones/9/rotation = Quaternion(-0.441455, 4.83206e-05, 1.67393e-05, 0.897284)
+bones/9/scale = Vector3(1, 1, 1)
+bones/13/rotation = Quaternion(0.994839, -9.70539e-09, 2.38829e-07, -0.101468)
+bones/13/scale = Vector3(1, 1, 1.00003)
+bones/14/rotation = Quaternion(0.240747, -3.1671e-09, 3.12e-08, 0.970588)
+bones/14/scale = Vector3(1, 1, 1)
+bones/15/rotation = Quaternion(-0.887584, -2.52251e-08, -1.77397e-07, 0.460646)
+bones/17/rotation = Quaternion(0.306359, -7.57884e-09, 8.14694e-08, 0.951916)
+bones/21/rotation = Quaternion(0.981207, -7.31787e-08, 1.70979e-09, 0.19296)
+bones/21/scale = Vector3(1, 1, 1.00003)
+bones/22/rotation = Quaternion(0.280869, -1.47386e-09, -1.16668e-07, 0.959746)
+bones/22/scale = Vector3(1, 1, 0.999999)
 bones/23/rotation = Quaternion(-0.75004, 2.89178e-08, 1.46045e-07, 0.661393)
-bones/30/position = Vector3(0.331109, 0.312888, -0.0525681)
-bones/30/rotation = Quaternion(-0.64105, 9.07971e-08, -7.72447e-08, 0.767499)
-bones/31/position = Vector3(-0.331109, 0.312888, -0.0525681)
-bones/31/rotation = Quaternion(-0.64105, -9.07971e-08, 7.72447e-08, 0.767499)
+bones/30/position = Vector3(0.331109, 0.197698, -0.363815)
+bones/31/position = Vector3(-0.331109, 0.135774, 0.0868087)
 
 [node name="Cube_039" parent="WalkerBot/metarig/Skeleton3D" index="0"]
-transform = Transform3D(0.999849, 4.39193e-05, 0.0173458, -0.016471, 0.315961, 0.948629, -0.00543891, -0.948772, 0.315914, -0.14907, 0.701751, 1.36991)
+transform = Transform3D(0.999849, 2.75073e-05, 0.0173467, 0.00271274, 0.987447, -0.157926, -0.0171333, 0.15795, 0.987298, 0.000577927, -0.158576, 0.00289533)
 
 [node name="Cube_036" parent="WalkerBot/metarig/Skeleton3D" index="1"]
-transform = Transform3D(0.999849, 3.83408e-05, 0.0173488, -0.0157543, 0.420776, 0.907027, -0.00726518, -0.907164, 0.420713, -0.149065, 0.602808, 1.37042)
+transform = Transform3D(0.999849, 2.75072e-05, 0.0173466, 0.00271274, 0.987447, -0.157926, -0.0171332, 0.157949, 0.987298, 0.000577986, -0.158576, 0.00289524)
 
 [node name="Cube_018" parent="WalkerBot/metarig/Skeleton3D" index="2"]
-transform = Transform3D(0.99985, 4.83525e-05, 0.0173412, -0.0100046, 0.818402, 0.574559, -0.0141643, -0.574646, 0.818279, -0.149081, -0.0655574, 1.15833)
+transform = Transform3D(0.99985, 4.00093e-05, 0.0173373, -0.00613659, 0.936078, 0.351739, -0.016215, -0.351792, 0.935938, 0.000557363, 0.16739, 0.614525)
 
 [node name="Cube_031" parent="WalkerBot/metarig/Skeleton3D" index="3"]
-transform = Transform3D(0.999985, -0.000169775, 0.00547601, 0.00056091, 0.99744, -0.071505, -0.00544985, 0.071507, 0.997425, 0.150069, -0.631883, -0.592132)
+transform = Transform3D(0.999985, -0.00016274, 0.00546815, 0.00474284, 0.523924, -0.851752, -0.00272628, 0.851765, 0.523917, 0.000433922, 0.880895, -1.67085)
 
 [node name="Cube_017" parent="WalkerBot/metarig/Skeleton3D" index="4"]
-transform = Transform3D(0.999985, -0.00017021, 0.00547045, 0.00495317, 0.453344, -0.891322, -0.00232828, 0.891336, 0.453338, 0.150073, 0.518834, -1.40622)
+transform = Transform3D(0.999985, -0.000167586, 0.00546171, 0.0052871, 0.282143, -0.959358, -0.00138021, 0.959372, 0.28214, 0.000443757, 1.25955, -1.68964)
 
 [node name="Cube_006" parent="WalkerBot/metarig/Skeleton3D" index="5"]
-transform = Transform3D(0.99985, 3.97809e-08, 0.0173286, 0.00287989, 0.986093, -0.16617, -0.0170876, 0.166195, 0.985945, 0.000627295, -0.376277, -0.135028)
+transform = Transform3D(0.99985, 1.57015e-10, 0.0173286, -1.59162e-10, 1, 5.82077e-11, -0.0173286, -5.82077e-11, 0.99985, 0.000627327, 0.047332, -5.4501e-06)
 
 [node name="Cube_022" parent="WalkerBot/metarig/Skeleton3D" index="6"]
-transform = Transform3D(1, -1.00758e-07, 3.24302e-08, 4.96248e-08, 0.175605, -0.98447, 9.34991e-08, 0.984458, 0.175577, -2.98023e-08, -0.134352, -0.125943)
+transform = Transform3D(1, 1.66441e-08, 8.54911e-09, -1.79656e-08, 0.981646, 0.190657, -5.23344e-09, -0.190676, 0.981661, -5.96046e-08, 0.0729962, 0.0310234)
 
 [node name="Cube_027" parent="WalkerBot/metarig/Skeleton3D" index="7"]
-transform = Transform3D(1, -8.73608e-08, 7.18151e-08, 5.71616e-08, -0.15754, -0.987521, 9.75853e-08, 0.987502, -0.157558, 0, -0.0730144, -0.311431)
+transform = Transform3D(1, 1.66746e-08, 8.54082e-09, -1.79939e-08, 0.981646, 0.190658, -5.21949e-09, -0.190677, 0.981661, -2.98023e-08, 0.0729963, 0.0310234)
 
 [node name="Cube_020" parent="WalkerBot/metarig/Skeleton3D" index="8"]
-transform = Transform3D(1, -9.56678e-08, -2.76809e-08, 3.72007e-08, 0.616613, -0.787281, 9.23862e-08, 0.787283, 0.616575, 0, -0.0954852, 0.0160892)
+transform = Transform3D(1, 1.6663e-08, 8.54675e-09, -1.79837e-08, 0.981646, 0.190657, -5.22748e-09, -0.190677, 0.981661, 0, 0.0729962, 0.0310233)
 
 [node name="Cube_013" parent="WalkerBot/metarig/Skeleton3D" index="9"]
-transform = Transform3D(1, 1.05969e-07, 1.26592e-07, -1.64877e-07, 0.601362, 0.798973, 8.53245e-09, -0.798987, 0.601354, -5.96046e-08, -0.0104859, 0.740357)
+transform = Transform3D(1, -1.50352e-08, -4.79835e-09, 1.43391e-08, 0.992512, -0.122156, 6.58584e-09, 0.122151, 0.992511, 2.98023e-08, 0.0526423, -0.111421)
 
 [node name="Cube_021" parent="WalkerBot/metarig/Skeleton3D" index="10"]
-transform = Transform3D(1, -7.55987e-08, 2.81671e-08, 3.70838e-08, 0.120622, -0.992709, 7.16586e-08, 0.992702, 0.120595, 0, 0.382645, -0.197814)
+transform = Transform3D(1, 2.88073e-08, -6.49774e-11, -2.84388e-08, 0.987723, 0.156212, 4.57484e-09, -0.156199, 0.987728, 0, -0.011873, 0.0222588)
 
 [node name="Cube_026" parent="WalkerBot/metarig/Skeleton3D" index="11"]
-transform = Transform3D(1, -7.55976e-08, 2.8168e-08, 3.70846e-08, 0.120622, -0.992709, 7.16574e-08, 0.992702, 0.120595, 5.96046e-08, 0.382645, -0.197814)
+transform = Transform3D(1, 2.88084e-08, -6.4027e-11, -2.844e-08, 0.987723, 0.156212, 4.57405e-09, -0.156199, 0.987728, 8.9407e-08, -0.0118729, 0.0222587)
 
 [node name="Cube_019" parent="WalkerBot/metarig/Skeleton3D" index="12"]
-transform = Transform3D(1, -7.55729e-08, 2.81766e-08, 3.70901e-08, 0.120621, -0.992709, 7.16319e-08, 0.992702, 0.120595, 2.98023e-08, 0.382645, -0.197814)
+transform = Transform3D(1, 2.8833e-08, -5.54792e-11, -2.84656e-08, 0.987723, 0.156212, 4.56944e-09, -0.156199, 0.987728, 2.98023e-08, -0.0118729, 0.0222587)
 
 [node name="Cube_010" parent="WalkerBot/metarig/Skeleton3D" index="13"]
-transform = Transform3D(1, 1.12539e-07, 4.79275e-08, -1.21725e-07, 0.953926, 0.300075, -1.19433e-08, -0.30007, 0.953906, -8.9407e-08, -0.337994, 0.290025)
+transform = Transform3D(1, -2.59321e-08, 4.04769e-09, 2.62511e-08, 0.988528, -0.151055, -7.21059e-11, 0.151078, 0.988519, 2.98023e-08, 0.0559143, -0.13783)
 
 [node name="Cube_004" parent="WalkerBot/metarig/Skeleton3D" index="14"]
-transform = Transform3D(1, 3.92252e-08, -3.24977e-09, -3.92253e-08, 0.986373, -0.164523, -3.24793e-09, 0.164523, 0.986373, -3.17119e-08, -0.373328, -0.133001)
+transform = Transform3D(1, -4.34635e-15, 0, 4.34635e-15, 1, 0, 0, 0, 1, 2.62013e-13, 0.047332, -1.49012e-08)
 
 [node name="RayDar" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
@@ -142,8 +130,8 @@ collide_with_areas = true
 behavior_tree = ExtResource("2_lckyo")
 blackboard_plan = SubResource("BlackboardPlan_vb233")
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("bot", "facing", "current_dir", "bot_rotation", "bot_g_rotation", "bot_l_rotation", "sub_v_port")]
-transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 2, 3.92638, 0)
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("bot", "facing", "current_dir", "bot_rotation", "bot_g_rotation", "bot_l_rotation")]
+transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 5.92638, 2)
 current = true
 script = ExtResource("3_b5eeu")
 bot = NodePath("..")
@@ -152,25 +140,19 @@ current_dir = NodePath("CanvasLayer/Control/VBoxContainer/current_dir")
 bot_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot_rotation")
 bot_g_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot _g_rot")
 bot_l_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot_l_rot")
-sub_v_port = NodePath("SubViewportContainer/2D PathMap")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
-layer = 2
 follow_viewport_enabled = true
 
 [node name="Control" type="Control" parent="Camera3D/CanvasLayer"]
-material = SubResource("ShaderMaterial_tgl1r")
 custom_minimum_size = Vector2(300, 90)
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/CanvasLayer/Control"]
-visible = false
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 0
 offset_right = 638.0
@@ -207,24 +189,20 @@ theme = SubResource("Theme_n18ty")
 theme_override_font_sizes/normal_font_size = 16
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Camera3D"]
-visible = false
-offset_top = 434.0
+offset_top = 433.0
 offset_right = 128.0
-offset_bottom = 562.0
+offset_bottom = 561.0
 scale = Vector2(1.67884, 1.67884)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="2D PathMap" type="SubViewport" parent="Camera3D/SubViewportContainer"]
+transparent_bg = true
 handle_input_locally = false
-snap_2d_transforms_to_pixel = true
-snap_2d_vertices_to_pixel = true
 size = Vector2i(128, 128)
-render_target_update_mode = 0
-script = ExtResource("5_8tawa")
+render_target_update_mode = 4
 
 [node name="OmniLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 3.63313, 2.16287)
-visible = false
 
 [editable path="WalkerBot"]

@@ -1,7 +1,6 @@
-[gd_resource type="BehaviorTree" load_steps=50 format=3 uid="uid://c00xr2o8jwmcn"]
+[gd_resource type="BehaviorTree" load_steps=37 format=3 uid="uid://c00xr2o8jwmcn"]
 
 [ext_resource type="Script" uid="uid://dflkrw6mr2t5u" path="res://ai/tasks/path_scan.gd" id="1_jikak"]
-[ext_resource type="Script" uid="uid://dbj68cpquhak7" path="res://ai/tasks/drop_in.gd" id="1_otxdf"]
 [ext_resource type="Script" uid="uid://cjrvjggxwhcxk" path="res://ai/tasks/target_player.gd" id="1_wjqib"]
 [ext_resource type="Script" uid="uid://nojxgxbvoiiw" path="res://ai/tasks/move.gd" id="2_xd8ps"]
 [ext_resource type="Script" uid="uid://cpjj1o51nr6jc" path="res://ai/tasks/pathfind.gd" id="4_wjqib"]
@@ -21,54 +20,6 @@ var/in_combat/type = 1
 var/in_combat/value = false
 var/in_combat/hint = 0
 var/in_combat/hint_string = "false"
-var/spawned/name = &"spawned"
-var/spawned/type = 1
-var/spawned/value = false
-var/spawned/hint = 0
-var/spawned/hint_string = "false"
-
-[sub_resource type="BBVariant" id="BBVariant_otxdf"]
-type = 1
-saved_value = true
-resource_name = "true"
-
-[sub_resource type="BTCheckVar" id="BTCheckVar_g4wun"]
-variable = &"spawned"
-check_type = 5
-value = SubResource("BBVariant_otxdf")
-
-[sub_resource type="BTRunLimit" id="BTRunLimit_otxdf"]
-children = [SubResource("BTCheckVar_g4wun")]
-
-[sub_resource type="BBNode" id="BBNode_xf7sy"]
-saved_value = NodePath("WalkerBot/AnimationPlayer")
-resource_name = "WalkerBot/AnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_s4l1l"]
-await_completion = 2.7
-animation_player = SubResource("BBNode_xf7sy")
-animation_name = &"walkerboosting"
-
-[sub_resource type="BTAction" id="BTAction_g4wun"]
-script = ExtResource("1_otxdf")
-
-[sub_resource type="BBNode" id="BBNode_otxdf"]
-saved_value = NodePath("WalkerBot/AnimationPlayer")
-resource_name = "WalkerBot/AnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_g4wun"]
-await_completion = 0.3
-animation_player = SubResource("BBNode_otxdf")
-animation_name = &"walkerboostend"
-blend = 0.1
-
-[sub_resource type="BTSequence" id="BTSequence_s4l1l"]
-custom_name = "DROP RUNNER"
-children = [SubResource("BTPlayAnimation_s4l1l"), SubResource("BTAction_g4wun"), SubResource("BTPlayAnimation_g4wun")]
-
-[sub_resource type="BTSequence" id="BTSequence_vk81o"]
-custom_name = "HellDiver"
-children = [SubResource("BTRunLimit_otxdf"), SubResource("BTSequence_s4l1l")]
 
 [sub_resource type="BTAction" id="BTAction_jikak"]
 script = ExtResource("1_wjqib")
@@ -99,15 +50,6 @@ resource_name = "false"
 variable = &"in_combat"
 value = SubResource("BBVariant_s4l1l")
 
-[sub_resource type="BBNode" id="BBNode_g4wun"]
-saved_value = NodePath("WalkerBot/AnimationPlayer")
-resource_name = "WalkerBot/AnimationPlayer"
-
-[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_xf7sy"]
-animation_player = SubResource("BBNode_g4wun")
-animation_name = &"walkerboostend"
-max_time = 2.0
-
 [sub_resource type="BBNode" id="BBNode_xd8ps"]
 saved_value = NodePath("WalkerBot/AnimationPlayer")
 resource_name = "WalkerBot/AnimationPlayer"
@@ -118,14 +60,13 @@ animation_name = &"walkeridle"
 blend = 0.1
 speed = 2.0
 
-[sub_resource type="BTRandomWait" id="BTRandomWait_wjqib"]
+[sub_resource type="BTWait" id="BTWait_wjqib"]
+duration = 2.0
 
 [sub_resource type="BTSequence" id="BTSequence_otxdf"]
-custom_name = "IdleRUNNER"
-children = [SubResource("BTAwaitAnimation_xf7sy"), SubResource("BTPlayAnimation_jikak"), SubResource("BTRandomWait_wjqib")]
+children = [SubResource("BTPlayAnimation_jikak"), SubResource("BTWait_wjqib")]
 
 [sub_resource type="BTCooldown" id="BTCooldown_g4wun"]
-duration = 5.0
 children = [SubResource("BTSequence_otxdf")]
 
 [sub_resource type="BTAction" id="BTAction_xd8ps"]
@@ -199,11 +140,10 @@ children = [SubResource("BTCooldown_g4wun"), SubResource("BTSequence_wjqib")]
 
 [sub_resource type="BTParallel" id="BTParallel_kfcax"]
 num_successes_required = 2
-custom_name = "Out of Combat"
 children = [SubResource("BTCheckVar_vk81o"), SubResource("BTSelector_wjqib")]
 
 [sub_resource type="BTSelector" id="BTSelector_otxdf"]
-children = [SubResource("BTSequence_vk81o"), SubResource("BTRunLimit_wjqib"), SubResource("BTSequence_xf7sy"), SubResource("BTParallel_kfcax")]
+children = [SubResource("BTRunLimit_wjqib"), SubResource("BTSequence_xf7sy"), SubResource("BTParallel_kfcax")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_vb233")
