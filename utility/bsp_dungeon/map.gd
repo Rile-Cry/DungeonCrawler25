@@ -1,22 +1,31 @@
 class_name Map extends Node3D
 
 @export var map : GridMap
+@export var floor_map : GridMap
 @export var bot : PackedScene
 @export var player : Player
+@export var bot_factory_scene : PackedScene
+@export var bot_collection : Node3D
 #@export var bot : Bot
 
-var depth : int = 2
-var map_size := Vector2i(16, 16)
+var depth : int = 6
+var map_size := Vector2i(64, 64)
 var paths := []
+var rooms : Array[Genum.DungeonRoomType]
 var root_node : Branch
 var tile_size : int = 3
+var current_room : Branch
 
 func _ready() -> void:
 	if map:
 		MoveHandler.map = map
 	
+	if player:
+		player.gun_ray.target_position *= tile_size
+	
 	map.cell_size = Vector3i(tile_size, tile_size, tile_size)
-	root_node = Branch.new(Vector2i(0, 0), Vector2i(map_size.x * depth, map_size.y * depth))
+	floor_map.cell_size = map.cell_size
+	root_node = Branch.new(Vector2i(0, 0), Vector2i(map_size.x * tile_size, map_size.y * tile_size ))
 	root_node.split(depth, paths)
 	generate_map()
 	_fill_wall()
@@ -33,10 +42,32 @@ func generate_map() -> void:
 			GameGlobal.rng.randi_range(2, 3)
 		)
 		
+		if leaf == boss_room:
+			rooms.append(Genum.DungeonRoomType.BOSS)
+		elif leaf == starter_room:
+			rooms.append(Genum.DungeonRoomType.STARTING)
+		else:
+			var weight_table : Array[float] = [0.05, .95]
+			var result : int = GameGlobal.rng.rand_weighted(weight_table)
+			var room_types : Array[Genum.DungeonRoomType] = [
+				Genum.DungeonRoomType.SAFE,
+				Genum.DungeonRoomType.ENEMY
+			]
+			rooms.append(room_types[result])
+			
+			if room_types[result] == Genum.DungeonRoomType.ENEMY:
+				var rand_x = GameGlobal.rng.randi_range(padding.x, leaf.size.x - padding.z) + leaf.position.x
+				var rand_y = GameGlobal.rng.randi_range(padding.y, leaf.size.y - padding.w) + leaf.position.y
+				var bot_factory : Node3D = bot_factory_scene.instantiate()
+				bot_collection.add_child(bot_factory)
+				bot_factory.position = MoveHandler.grab_tile_global_position(Vector3i(rand_x, 0, rand_y))
+		
 		for x in range(leaf.size.x):
 			for y in range(leaf.size.y):
 				if not is_inside_padding(x, y, leaf, padding):
 					map.set_cell_item(Vector3i(x + leaf.position.x, 0, y + leaf.position.y), 0)
+				else:
+					floor_map.set_cell_item(Vector3i(x + leaf.position.x, 0, y + leaf.position.y), 0)
 	
 	for path in paths:
 		if path['left'].y == path['right'].y:
@@ -124,3 +155,6 @@ func _place_wall(pos: Vector3i) -> void:
 	
 	if checked:
 		map.set_cell_item(pos, 1)
+
+func _check_current_room() -> void:
+	pass

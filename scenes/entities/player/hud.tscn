@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2djq5ot2o762"]
+
+[ext_resource type="PackedScene" uid="uid://c80pgyf27ros4" path="res://assets/models/hud/Hud.glb" id="1_l2quj"]
+
+[node name="Hud" instance=ExtResource("1_l2quj")]
+
+[node name="Skeleton3D" parent="Cube_011/Armature" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6006, 0.396602, -2.28416)
+bones/0/position = Vector3(0, 0, 0)
+bones/2/position = Vector3(0, 0, -0.001)
+
+[node name="Cube_010" parent="Cube_011/Armature/Skeleton3D" index="0"]
+transform = Transform3D(0.049331, -0.00284663, -0.070748, 0.0078469, 0.0900967, 0.00356426, 0.0612686, -0.00924703, 0.056507, -0.000973063, 0.10275, -0.0137225)

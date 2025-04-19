@@ -1,6 +1,8 @@
 extends LimboState
 
 func _enter() -> void:
+	GameGlobalEvents.game_tick.emit()
+	
 	if owner.anim_player:
 		owner.anim_player.play(&"walkeridle")
 
@@ -14,6 +16,9 @@ func _update(delta: float) -> void:
 			MoveHandler.move_body(owner)
 			if Vector3(owner.target_dir) != owner.global_position:
 				dispatch(&"moving")
+	
+	if Input.is_action_just_pressed("aim"):
+		dispatch(&"aiming")
 	
 	if turn_dir != 0:
 		if "turn_dir" in owner:
