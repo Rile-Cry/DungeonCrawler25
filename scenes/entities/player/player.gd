@@ -7,6 +7,8 @@ class_name Player extends Node3D
 @export var turning_state : LimboState
 @export var aim_state : LimboState
 
+@export var bot : Node3D
+
 @export_category(&"Body References")
 @export var anim_player : AnimationPlayer
 @export var gun_ray : RayCast3D

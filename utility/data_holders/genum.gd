@@ -14,3 +14,7 @@ enum DungeonRoomType {
 	ENEMY,
 	SAFE
 }
+
+enum DungeonTileType {
+	EMPTY
+}

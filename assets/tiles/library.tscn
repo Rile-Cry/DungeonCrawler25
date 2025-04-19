@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://fdvo7tfq35j7"]
 
 [ext_resource type="PackedScene" uid="uid://dty31saxted28" path="res://assets/models/env/ground1.glb" id="1_cjh6l"]
-[ext_resource type="PackedScene" uid="uid://bbf4j8cjoxe8a" path="res://assets/tiles/building_1_tile.tscn" id="2_cjh6l"]
+[ext_resource type="PackedScene" path="res://assets/tiles/building_1_tile.tscn" id="2_cjh6l"]
 
 [node name="Library" type="Node3D"]
 
