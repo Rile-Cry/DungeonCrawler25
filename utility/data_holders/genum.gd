@@ -12,7 +12,11 @@ enum DungeonRoomType {
 	BOSS,
 	STARTING,
 	ENEMY,
-	SAFE
+	SAFE,
+}
+
+enum DungeonTileType {
+	EMPTY
 }
 
 enum DungeonTileType {
