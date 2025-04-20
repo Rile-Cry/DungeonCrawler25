@@ -1,0 +1,147 @@
+[gd_scene load_steps=17 format=3 uid="uid://ccbprovahu30p"]
+
+[ext_resource type="Script" uid="uid://dusydvvn536hy" path="res://utility/bsp_dungeon/map.gd" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://d1xg47mwvifgq" path="res://TEST_SCENES/bot.tscn" id="2_gee14"]
+[ext_resource type="MeshLibrary" uid="uid://cok6pue3pwryl" path="res://assets/tiles/library.tres" id="2_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://bi65u4cbgluxp" path="res://scenes/entities/player/player.tscn" id="2_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://dla78280d3dbq" path="res://scenes/entities/bot/bot_factory.tscn" id="2_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://b2djq5ot2o762" path="res://scenes/entities/player/hud.tscn" id="3_iywne"]
+[ext_resource type="Texture2D" uid="uid://cm0q1ohdkgg1e" path="res://assets/images/skybox/ringed_gas_giant_planet.png" id="4_lbhrr"]
+[ext_resource type="FontFile" uid="uid://d3x5d24v5bq0f" path="res://assets/fonts/m5x7.ttf" id="5_p57ef"]
+[ext_resource type="Script" uid="uid://b5i482rlkalhs" path="res://scenes/mini_map.gd" id="8_0tnpc"]
+[ext_resource type="TileSet" uid="uid://cd2nlxc42ylkj" path="res://assets/tiles/map_cells.tres" id="8_dinhu"]
+[ext_resource type="Script" uid="uid://b1gxjhvvbndgy" path="res://scenes/tile_map.gd" id="8_vtaks"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_p57ef"]
+viewport_path = NodePath("PlayerScene/MainScreen/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_u5sy4"]
+viewport_path = NodePath("PlayerScene/MapScreen/SubViewport")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_iywne"]
+panorama = ExtResource("4_lbhrr")
+
+[sub_resource type="Sky" id="Sky_p57ef"]
+sky_material = SubResource("PanoramaSkyMaterial_iywne")
+
+[sub_resource type="Environment" id="Environment_u5sy4"]
+background_mode = 2
+background_energy_multiplier = 5.0
+sky = SubResource("Sky_p57ef")
+ambient_light_color = Color(0.20571, 0.224839, 0.363596, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 0.31
+
+[node name="Game" type="Node"]
+
+[node name="GameScene" type="Node3D" parent="."]
+
+[node name="Map" type="Node3D" parent="GameScene" node_paths=PackedStringArray("map", "floor_map", "player", "bot_collection")]
+script = ExtResource("1_yqjtg")
+map = NodePath("GridMap")
+floor_map = NodePath("GridMap2")
+bot = ExtResource("2_gee14")
+player = NodePath("../../PlayerScene/MainScreen/SubViewport/Player")
+bot_factory_scene = ExtResource("2_u5sy4")
+bot_collection = NodePath("../BotCollection")
+
+[node name="GridMap" type="GridMap" parent="GameScene/Map"]
+mesh_library = ExtResource("2_lbhrr")
+cell_size = Vector3(3, 3, 3)
+
+[node name="GridMap2" type="GridMap" parent="GameScene/Map"]
+mesh_library = ExtResource("2_lbhrr")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="GameScene"]
+transform = Transform3D(-4.36969e-08, -0.0257408, 0.999669, -1.12516e-09, 0.999669, 0.0257408, -1, 3.07906e-15, -4.37114e-08, 0, 0, 0)
+visible = false
+light_color = Color(0.331796, 0.372364, 0.476622, 1)
+light_energy = 4.623
+light_specular = 0.688
+shadow_enabled = true
+shadow_reverse_cull_face = true
+directional_shadow_blend_splits = true
+directional_shadow_fade_start = 1.0
+directional_shadow_max_distance = 3.0
+directional_shadow_pancake_size = 10.0
+
+[node name="BotCollection" type="Node3D" parent="GameScene"]
+
+[node name="PlayerScene" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
+
+[node name="Hud" parent="PlayerScene" instance=ExtResource("3_iywne")]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PlayerScene/Hud"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 2
+
+[node name="SubViewport" type="SubViewport" parent="PlayerScene/Hud/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(576, 324)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="PlayerScene/Hud/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.982186, 0.187913, 0, -0.187913, 0.982186, 0, 100.3, 0)
+current = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="PlayerScene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.2)
+
+[node name="MainScreen" type="Sprite3D" parent="PlayerScene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.300003, -4.2)
+double_sided = false
+texture = SubResource("ViewportTexture_p57ef")
+
+[node name="SubViewport" type="SubViewport" parent="PlayerScene/MainScreen"]
+size = Vector2i(382, 382)
+
+[node name="Player" parent="PlayerScene/MainScreen/SubViewport" instance=ExtResource("2_lnu2h")]
+
+[node name="MapScreen" type="Sprite3D" parent="PlayerScene"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, -1.1333, -1.44691, -2.20279)
+texture = SubResource("ViewportTexture_u5sy4")
+
+[node name="SubViewport" type="SubViewport" parent="PlayerScene/MapScreen"]
+size = Vector2i(48, 60)
+
+[node name="Node2D" type="Node2D" parent="PlayerScene/MapScreen/SubViewport" node_paths=PackedStringArray("astar_map", "map")]
+z_index = 18
+script = ExtResource("8_0tnpc")
+astar_map = NodePath("../../../../GameScene/Map/GridMap2")
+map = NodePath("../../../../GameScene/Map")
+
+[node name="game_map" type="TileMap" parent="PlayerScene/MapScreen/SubViewport/Node2D"]
+tile_set = ExtResource("8_dinhu")
+format = 2
+layer_0/name = "grid_map_layer"
+script = ExtResource("8_vtaks")
+
+[node name="path" type="TileMap" parent="PlayerScene/MapScreen/SubViewport/Node2D"]
+tile_set = ExtResource("8_dinhu")
+rendering_quadrant_size = 32
+format = 2
+layer_0/name = "map"
+
+[node name="Label" type="Label" parent="PlayerScene/MapScreen/SubViewport"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_p57ef")
+theme_override_font_sizes/font_size = 16
+text = "Room"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_u5sy4")
+
+[editable path="PlayerScene/MainScreen/SubViewport/Player"]
+[editable path="PlayerScene/MainScreen/SubViewport/Player/WalkerBot"]

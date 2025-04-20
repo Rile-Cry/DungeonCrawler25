@@ -1,7 +1,7 @@
 extends BTAction
 
 func _enter() -> void:
-	agent.drop_in()
+	#agent.drop_in()
 	blackboard.set_var(&"spawned",true)
 
 func _tick(delta: float) -> Status:

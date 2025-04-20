@@ -24,10 +24,10 @@ func get_pos() -> Vector3:
 func update_facing(to_face:int) -> void:
 	dir = directions[to_face]
 
-func drop_in() -> void:
-	var landing = global_position - Vector3(0,100,0)
-	tweener= get_tree().create_tween().bind_node(self).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	tweener.tween_property(self,"global_position",landing,3)
+#func drop_in() -> void:
+	#var landing = global_position - Vector3(0,100,0)
+	#tweener= get_tree().create_tween().bind_node(self).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	#tweener.tween_property(self,"global_position",landing,3)
 
 func wall_bonk() -> bool:
 	if rays[0].is_colliding() :
@@ -56,7 +56,7 @@ func move_bot(pick:int) -> void:
 
 func tween_translate(facing:int) -> void:
 	tweener = get_tree().create_tween().bind_node(self)
-	var temp = [global_position,target_dir, directions[facing]]
+	#var temp = [global_position,target_dir, directions[facing]]
 	#print("Current Pos: %s  Target Pos: %s  Direction Facing: %s" % temp)
 	tweener.tween_property(self,"global_position",target_dir,1.5)
 	await tweener.finished

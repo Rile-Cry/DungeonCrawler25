@@ -6,3 +6,4 @@ signal game_tick
 
 signal get_target_pos(cur_pos: Vector3, dir: Vector3)
 signal receive_target_pos(new_pos: Vector3)
+signal position_updated(pos:Vector2i)

@@ -11,6 +11,7 @@ func move_body(body: Node3D) -> void:
 		if map.get_cell_item(map_pos) == 0:
 			var offset : int = .5 if (int(map.cell_size.x) % 2 == 1) else 0
 			body.target_dir = grab_tile_global_position(map_pos) + Vector3(offset, 0, offset)
+			GameGlobalEvents.position_updated.emit(Vector2i(body.target_dir.x,body.target_dir.z))
 		else:
 			body.target_dir = body.global_position
 	else:

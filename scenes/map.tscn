@@ -1,11 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://rtx8katlqhyg"]
+[gd_scene load_steps=4 format=3 uid="uid://rtx8katlqhyg"]
 
 [ext_resource type="Script" uid="uid://dusydvvn536hy" path="res://utility/bsp_dungeon/map.gd" id="1_paxxb"]
+[ext_resource type="PackedScene" uid="uid://d1xg47mwvifgq" path="res://TEST_SCENES/bot.tscn" id="2_0cso3"]
 [ext_resource type="MeshLibrary" uid="uid://mvup2wau43ij" path="res://assets/tiles/library_test.tres" id="2_gldc4"]
 
 [node name="Map" type="Node3D" node_paths=PackedStringArray("map")]
 script = ExtResource("1_paxxb")
 map = NodePath("GridMap")
+bot = ExtResource("2_0cso3")
+bot_factory_scene = ExtResource("2_0cso3")
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("2_gldc4")

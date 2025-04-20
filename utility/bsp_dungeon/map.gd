@@ -19,8 +19,6 @@ var root_node : Branch
 var tile_size : int = 3
 var current_room : Branch
 
-var two_d_map : Array[Vector2i]
-
 func _ready() -> void:
 	if map:
 		MoveHandler.map = map
@@ -35,7 +33,7 @@ func _ready() -> void:
 	root_node.split(depth, paths)
 	generate_map()
 	_fill_wall()
-	spawn_boss(boss_loc)
+	#spawn_boss(boss_loc)
 	#var loop = 0
 	#while loop < 15:
 		#spawn_boss(boss_loc)
@@ -79,8 +77,6 @@ func generate_map() -> void:
 				if not is_inside_padding(x, y, leaf, padding):
 					map.set_cell_item(Vector3i(x + leaf.position.x, 0, y + leaf.position.y), 0)
 
-					two_d_map.append(Vector2i(x,y))
-
 				else:
 					floor_map.set_cell_item(Vector3i(x + leaf.position.x, 0, y + leaf.position.y), 0)
 
@@ -98,6 +94,7 @@ func generate_map() -> void:
 	var pos := map.to_global(map_pos)
 	
 	player.global_position = pos
+	GameGlobalEvents.position_updated.emit(Vector2i(pos.x,pos.z))
 	
 func is_inside_padding(x : int, y : int, leaf : Branch, padding : Vector4i) -> bool:
 	return x <= padding.x or y < padding.y or x >= leaf.size.x - padding.z or y >= leaf.size.y - padding.w

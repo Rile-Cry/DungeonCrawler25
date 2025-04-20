@@ -1,19 +1,40 @@
-[gd_scene load_steps=13 format=3 uid="uid://ccbprovahu30p"]
+[gd_scene load_steps=20 format=3 uid="uid://ccbprovahu30p"]
 
 [ext_resource type="Script" uid="uid://dusydvvn536hy" path="res://utility/bsp_dungeon/map.gd" id="1_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://d1xg47mwvifgq" path="res://TEST_SCENES/bot.tscn" id="2_iywne"]
+[ext_resource type="PackedScene" uid="uid://d1xg47mwvifgq" path="res://TEST_SCENES/bot.tscn" id="2_gee14"]
 [ext_resource type="MeshLibrary" uid="uid://cok6pue3pwryl" path="res://assets/tiles/library.tres" id="2_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://bi65u4cbgluxp" path="res://scenes/entities/player/player.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://dla78280d3dbq" path="res://scenes/entities/bot/bot_factory.tscn" id="2_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://b2djq5ot2o762" path="res://scenes/entities/player/hud.tscn" id="3_iywne"]
 [ext_resource type="Texture2D" uid="uid://cm0q1ohdkgg1e" path="res://assets/images/skybox/ringed_gas_giant_planet.png" id="4_lbhrr"]
 [ext_resource type="FontFile" uid="uid://d3x5d24v5bq0f" path="res://assets/fonts/m5x7.ttf" id="5_p57ef"]
+[ext_resource type="Script" uid="uid://b5i482rlkalhs" path="res://scenes/mini_map.gd" id="8_0tnpc"]
+[ext_resource type="TileSet" uid="uid://cd2nlxc42ylkj" path="res://assets/tiles/map_cells.tres" id="8_dinhu"]
+[ext_resource type="Script" uid="uid://b1gxjhvvbndgy" path="res://scenes/tile_map.gd" id="8_vtaks"]
+[ext_resource type="Texture2D" uid="uid://ck5j71u645tqi" path="res://assets/tiles/textures/Material_004_albedo.png" id="10_dinhu"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_p57ef"]
 viewport_path = NodePath("PlayerScene/MainScreen/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_u5sy4"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_dinhu"]
 viewport_path = NodePath("PlayerScene/MapScreen/SubViewport")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kvuet"]
+texture = ExtResource("10_dinhu")
+texture_region_size = Vector2i(32, 32)
+0:0/size_in_atlas = Vector2i(4, 4)
+0:0/0 = 0
+0:0/0/modulate = Color(0.286275, 0.494118, 0.439216, 0.560784)
+
+[sub_resource type="TileSet" id="TileSet_trtic"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_kvuet")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_iywne"]
+panorama = ExtResource("4_lbhrr")
+
+[sub_resource type="Sky" id="Sky_p57ef"]
+sky_material = SubResource("PanoramaSkyMaterial_iywne")
 
 [sub_resource type="Environment" id="Environment_u5sy4"]
 background_mode = 2
@@ -31,6 +52,7 @@ ambient_light_energy = 0.31
 script = ExtResource("1_yqjtg")
 map = NodePath("GridMap")
 floor_map = NodePath("GridMap2")
+bot = ExtResource("2_gee14")
 player = NodePath("../../PlayerScene/MainScreen/SubViewport/Player")
 bot_factory_scene = ExtResource("2_u5sy4")
 bot_collection = NodePath("../BotCollection")
@@ -38,7 +60,6 @@ bot_collection = NodePath("../BotCollection")
 [node name="GridMap" type="GridMap" parent="GameScene/Map"]
 mesh_library = ExtResource("2_lbhrr")
 cell_size = Vector3(3, 3, 3)
-
 
 [node name="GridMap2" type="GridMap" parent="GameScene/Map"]
 mesh_library = ExtResource("2_lbhrr")
@@ -140,11 +161,33 @@ transform = Transform3D(1, -5.44276e-12, 1.2264e-11, 1.07292e-11, 1, 8.9705e-06,
 transform = Transform3D(1, -4.34158e-15, -5.82645e-13, 4.34115e-15, 1, -5.09317e-11, 5.82645e-13, 5.09317e-11, 1, -2.33856e-14, 3.57628e-07, 7.45058e-09)
 
 [node name="MapScreen" type="Sprite3D" parent="PlayerScene"]
-transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, -1.1157, -1.44691, -2.2)
-texture = SubResource("ViewportTexture_u5sy4")
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, -1.1163, -1.4524, -2.24124)
+offset = Vector2(0.5, 0.5)
+texture = SubResource("ViewportTexture_dinhu")
+region_enabled = true
+region_rect = Rect2(0, 0, 45, 56)
 
 [node name="SubViewport" type="SubViewport" parent="PlayerScene/MapScreen"]
-size = Vector2i(48, 60)
+size = Vector2i(45, 56)
+
+[node name="Node2D" type="Node2D" parent="PlayerScene/MapScreen/SubViewport" node_paths=PackedStringArray("astar_map", "map", "map_screen")]
+script = ExtResource("8_0tnpc")
+astar_map = NodePath("../../../../GameScene/Map/GridMap2")
+map = NodePath("../../../../GameScene/Map")
+map_screen = NodePath("../..")
+
+[node name="game_map" type="TileMap" parent="PlayerScene/MapScreen/SubViewport/Node2D"]
+tile_set = ExtResource("8_dinhu")
+rendering_quadrant_size = 32
+format = 2
+layer_0/name = "grid_map_layer"
+script = ExtResource("8_vtaks")
+
+[node name="path" type="TileMap" parent="PlayerScene/MapScreen/SubViewport/Node2D"]
+tile_set = SubResource("TileSet_trtic")
+rendering_quadrant_size = 32
+format = 2
+layer_0/name = "map"
 
 [node name="Label" type="Label" parent="PlayerScene/MapScreen/SubViewport"]
 anchors_preset = 12
