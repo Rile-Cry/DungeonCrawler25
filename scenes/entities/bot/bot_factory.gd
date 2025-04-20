@@ -6,7 +6,7 @@ var player : Player
 var spawn_dist : int = 24
 var spawned_bots : Array[Bot] = []
 var spawn_cap : int = 3
-var spawn_time := 4
+var spawn_time :=  4
 var current_time := spawn_time
 
 func _ready() -> void:
@@ -27,6 +27,7 @@ func _on_game_tick() -> void:
 					var bot = bot_scene.instantiate()
 					add_child(bot)
 					spawned_bots.append(bot)
+					bot.add_to_group(&"enemies")
 		
 		current_time = spawn_time
 	

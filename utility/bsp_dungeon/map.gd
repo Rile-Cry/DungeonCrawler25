@@ -4,8 +4,11 @@ class_name Map extends Node3D
 @export var floor_map : GridMap
 @export var bot : PackedScene
 @export var player : Player
+var boss_loc : Branch
+
 @export var bot_factory_scene : PackedScene
 @export var bot_collection : Node3D
+
 #@export var bot : Bot
 
 var depth : int = 6
@@ -26,12 +29,19 @@ func _ready() -> void:
 	map.cell_size = Vector3i(tile_size, tile_size, tile_size)
 	floor_map.cell_size = map.cell_size
 	root_node = Branch.new(Vector2i(0, 0), Vector2i(map_size.x * tile_size, map_size.y * tile_size ))
+
 	root_node.split(depth, paths)
 	generate_map()
 	_fill_wall()
+	#spawn_boss(boss_loc)
+	#var loop = 0
+	#while loop < 15:
+		#spawn_boss(boss_loc)
+		#loop +=1
 
 func generate_map() -> void:
 	var boss_room = _find_boss_room()
+	boss_loc = boss_room
 	var starter_room = _choose_starting_room()
 	
 	for leaf in root_node.get_leaves():
@@ -66,8 +76,10 @@ func generate_map() -> void:
 			for y in range(leaf.size.y):
 				if not is_inside_padding(x, y, leaf, padding):
 					map.set_cell_item(Vector3i(x + leaf.position.x, 0, y + leaf.position.y), 0)
+
 				else:
 					floor_map.set_cell_item(Vector3i(x + leaf.position.x, 0, y + leaf.position.y), 0)
+
 	
 	for path in paths:
 		if path['left'].y == path['right'].y:
@@ -82,7 +94,8 @@ func generate_map() -> void:
 	var pos := map.to_global(map_pos)
 	
 	player.global_position = pos
-
+	GameGlobalEvents.position_updated.emit(Vector2i(pos.x,pos.z))
+	
 func is_inside_padding(x : int, y : int, leaf : Branch, padding : Vector4i) -> bool:
 	return x <= padding.x or y < padding.y or x >= leaf.size.x - padding.z or y >= leaf.size.y - padding.w
 
@@ -92,7 +105,7 @@ func spawn_boss(b:Branch) -> void:
 	var map_pos := map.map_to_local(Vector3i(boss_pos.x, 0, boss_pos.y))
 	var pos := map.to_global(map_pos)
 	
-	boss.global_position = pos + Vector3(0, 3, 0)
+	boss.global_position = pos + Vector3(0,100,0)
 	
 	add_child(boss)
 	boss.add_to_group("boss")

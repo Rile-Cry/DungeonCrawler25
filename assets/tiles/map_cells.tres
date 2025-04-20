@@ -1,0 +1,22 @@
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://cd2nlxc42ylkj"]
+
+[ext_resource type="Texture2D" uid="uid://ck5j71u645tqi" path="res://assets/tiles/textures/Material_004_albedo.png" id="1_3tke6"]
+[ext_resource type="Texture2D" uid="uid://k65wyn7dl80g" path="res://assets/models/env/ground1_RoidNormal.png" id="2_u1av8"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u1av8"]
+texture = ExtResource("1_3tke6")
+texture_region_size = Vector2i(32, 32)
+0:0/size_in_atlas = Vector2i(4, 4)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vldvp"]
+texture = ExtResource("2_u1av8")
+texture_region_size = Vector2i(32, 32)
+0:0/size_in_atlas = Vector2i(4, 4)
+0:0/0 = 0
+0:0/0/modulate = Color(0.22941, 0.41556, 0.44755, 0.564706)
+
+[resource]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_u1av8")
+sources/1 = SubResource("TileSetAtlasSource_vldvp")

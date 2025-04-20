@@ -7,6 +7,8 @@ class_name Player extends Node3D
 @export var turning_state : LimboState
 @export var aim_state : LimboState
 
+@export var bot : Node3D
+
 @export_category(&"Body References")
 @export var anim_player : AnimationPlayer
 @export var gun_ray : RayCast3D
@@ -18,7 +20,10 @@ var target_dir : Vector3
 func _ready() -> void:
 	_init_state_machine()
 	
+	anim_player = bot.find_child(&"AnimationPlayer")
+	anim_player.speed_scale = 2
 	add_to_group(&"player")
+	
 
 func _init_state_machine() -> void:	
 	# Idle State Transitions

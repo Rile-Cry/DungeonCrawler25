@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d1xg47mwvifgq" path="res://TEST_SCENES/bot.tscn" id="1_8jqo6"]
 [ext_resource type="Script" uid="uid://dyyhxxmge0mji" path="res://TEST_SCENES/camera_3d.gd" id="1_m74h1"]
-[ext_resource type="PackedScene" uid="uid://d2g4yctd4qk1f" path="res://scenes/map.tscn" id="3_5kfji"]
+[ext_resource type="PackedScene" uid="uid://rtx8katlqhyg" path="res://scenes/map.tscn" id="3_5kfji"]
 
 [sub_resource type="Theme" id="Theme_m74h1"]
 

@@ -11,4 +11,5 @@ script = ExtResource("1_ocls7")
 bot_scene = ExtResource("2_5fse5")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+layers = 2
 mesh = SubResource("BoxMesh_u6aa0")
