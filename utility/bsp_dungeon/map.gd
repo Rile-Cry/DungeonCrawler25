@@ -20,6 +20,8 @@ var tile_size : int = 3
 var current_room : Branch
 
 func _ready() -> void:
+	GameGlobalEvents.register_to_map.connect(_register_body_to_map)
+	
 	if map:
 		MoveHandler.map = map
 	
@@ -28,9 +30,9 @@ func _ready() -> void:
 	
 	map.cell_size = Vector3i(tile_size, tile_size, tile_size)
 	floor_map.cell_size = map.cell_size
-	root_node = Branch.new(Vector2i(0, 0), Vector2i(map_size.x * tile_size, map_size.y * tile_size ))
+	root_node = Branch.new(Vector2i(0, 0), Vector2i(map_size.x, map_size.y), tile_size)
 
-	root_node.split(depth, paths)
+	root_node.split(paths)
 	generate_map()
 	_fill_wall()
 	#spawn_boss(boss_loc)
@@ -39,47 +41,54 @@ func _ready() -> void:
 		#spawn_boss(boss_loc)
 		#loop +=1
 
+#func generate_map() -> void:
+#	boss_loc = boss_room
+#	
+#	for leaf in root_node.get_leaves():
+#		
+#		if leaf == boss_room:
+#			rooms.append(Genum.DungeonRoomType.BOSS)
+#		elif leaf == starter_room:
+#			rooms.append(Genum.DungeonRoomType.STARTING)
+#		else:
+#			var weight_table : Array[float] = [0.05, .95]
+#			var result : int = GameGlobal.rng.rand_weighted(weight_table)
+#			var room_types : Array[Genum.DungeonRoomType] = [
+#				Genum.DungeonRoomType.SAFE,
+#				Genum.DungeonRoomType.ENEMY
+#			]
+#			rooms.append(room_types[result])
+#			
+#			if room_types[result] == Genum.DungeonRoomType.ENEMY:
+#				var rand_x = GameGlobal.rng.randi_range(padding.x, leaf.size.x - padding.z) + leaf.position.x
+#				var rand_y = GameGlobal.rng.randi_range(padding.y, leaf.size.y - padding.w) + leaf.position.y
+#				var bot_factory : Node3D = bot_factory_scene.instantiate()
+#				bot_collection.add_child(bot_factory)
+#				bot_factory.position = MoveHandler.grab_tile_global_position(Vector3i(rand_x, 0, rand_y))w
+
 func generate_map() -> void:
-	var boss_room = _find_boss_room()
-	boss_loc = boss_room
-	var starter_room = _choose_starting_room()
+	var starter_room := _choose_starting_room()
+	
+	var padding := Vector4i(
+		GameGlobal.rng.randi_range(1, 3),
+		GameGlobal.rng.randi_range(1, 3),
+		GameGlobal.rng.randi_range(1, 3),
+		GameGlobal.rng.randi_range(1, 3)
+	)
+	
+	var boss_padding := Vector4i(1, 1, 1, 1)
 	
 	for leaf in root_node.get_leaves():
-		var padding := Vector4i(
-			GameGlobal.rng.randi_range(2, 3),
-			GameGlobal.rng.randi_range(2, 3),
-			GameGlobal.rng.randi_range(2, 3),
-			GameGlobal.rng.randi_range(2, 3)
-		)
-		
-		if leaf == boss_room:
-			rooms.append(Genum.DungeonRoomType.BOSS)
-		elif leaf == starter_room:
-			rooms.append(Genum.DungeonRoomType.STARTING)
-		else:
-			var weight_table : Array[float] = [0.05, .95]
-			var result : int = GameGlobal.rng.rand_weighted(weight_table)
-			var room_types : Array[Genum.DungeonRoomType] = [
-				Genum.DungeonRoomType.SAFE,
-				Genum.DungeonRoomType.ENEMY
-			]
-			rooms.append(room_types[result])
-			
-			if room_types[result] == Genum.DungeonRoomType.ENEMY:
-				var rand_x = GameGlobal.rng.randi_range(padding.x, leaf.size.x - padding.z) + leaf.position.x
-				var rand_y = GameGlobal.rng.randi_range(padding.y, leaf.size.y - padding.w) + leaf.position.y
-				var bot_factory : Node3D = bot_factory_scene.instantiate()
-				bot_collection.add_child(bot_factory)
-				bot_factory.position = MoveHandler.grab_tile_global_position(Vector3i(rand_x, 0, rand_y))
-		
 		for x in range(leaf.size.x):
 			for y in range(leaf.size.y):
-				if not is_inside_padding(x, y, leaf, padding):
-					map.set_cell_item(Vector3i(x + leaf.position.x, 0, y + leaf.position.y), 0)
-
+				if not leaf.is_boss:
+					if not is_inside_padding(x, y, leaf, padding):
+						map.set_cell_item(Vector3i(x + leaf.position.x, 0, y + leaf.position.y), 0)
+					else:
+						floor_map.set_cell_item(Vector3i(x + leaf.position.x, 0, y + leaf.position.y), 0)
 				else:
-					floor_map.set_cell_item(Vector3i(x + leaf.position.x, 0, y + leaf.position.y), 0)
-
+					if not is_inside_padding(x, y, leaf, boss_padding):
+						map.set_cell_item(Vector3i(x + leaf.position.x, 0, y + leaf.position.y), 0)
 	
 	for path in paths:
 		if path['left'].y == path['right'].y:
@@ -95,7 +104,7 @@ func generate_map() -> void:
 	
 	player.global_position = pos
 	GameGlobalEvents.position_updated.emit(Vector2i(pos.x,pos.z))
-	
+
 func is_inside_padding(x : int, y : int, leaf : Branch, padding : Vector4i) -> bool:
 	return x <= padding.x or y < padding.y or x >= leaf.size.x - padding.z or y >= leaf.size.y - padding.w
 
@@ -111,19 +120,11 @@ func spawn_boss(b:Branch) -> void:
 	boss.add_to_group("boss")
 
 func _find_boss_room() -> Branch:
-	var largest_room : Branch
-	var i : int = 0
 	for leaf in root_node.get_leaves():
-		if largest_room:
-			var largest_room_area = largest_room.size.x * largest_room.size.y
-			var leaf_room_area = leaf.size.x * leaf.size.y
-			if largest_room_area < leaf_room_area:
-				largest_room = leaf
-		else:
-			largest_room = leaf
-			
-	return largest_room
-				
+		if leaf.is_boss:
+			return leaf
+	
+	return null
 
 func _choose_starting_room() -> Branch:
 	var boss_room = _find_boss_room()
@@ -171,3 +172,6 @@ func _place_wall(pos: Vector3i) -> void:
 
 func _check_current_room() -> void:
 	pass
+
+func _register_body_to_map(body: Node3D) -> void:
+	body.tile_size = tile_size

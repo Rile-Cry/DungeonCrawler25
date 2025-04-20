@@ -11,14 +11,9 @@ enum BusID {
 enum DungeonRoomType {
 	BOSS,
 	STARTING,
+	EMPTY,
+	TREASURE,
 	ENEMY,
 	SAFE,
-}
-
-enum DungeonTileType {
-	EMPTY
-}
-
-enum DungeonTileType {
-	EMPTY
+	BOSSLOCK,
 }

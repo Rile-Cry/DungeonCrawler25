@@ -12,10 +12,12 @@ class_name Player extends Node3D
 @export_category(&"Body References")
 @export var anim_player : AnimationPlayer
 @export var gun_ray : RayCast3D
+@export var wall_ray : RayCast3D
 
 var dir : Vector3
 var turn_dir : float
 var target_dir : Vector3
+var tile_size : int
 
 func _ready() -> void:
 	_init_state_machine()
@@ -24,6 +26,7 @@ func _ready() -> void:
 	anim_player.speed_scale = 2
 	add_to_group(&"player")
 	
+	GameGlobalEvents.register_to_map.emit(self)
 
 func _init_state_machine() -> void:	
 	# Idle State Transitions

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://kb8ukdv50gqr" path="res://assets/models/enemies/enemy_bot.tscn" id="2_n18ty"]
 [ext_resource type="Script" uid="uid://dyyhxxmge0mji" path="res://TEST_SCENES/camera_3d.gd" id="3_b5eeu"]
 [ext_resource type="Shader" uid="uid://cqg8eank0t6ok" path="res://assets/shaders/ps_one.gdshader" id="5_8bj0o"]
-[ext_resource type="Script" uid="uid://b7w7350b465rq" path="res://TEST_SCENES/2d_path_map.gd" id="5_8tawa"]
+[ext_resource type="Script" path="res://TEST_SCENES/2d_path_map.gd" id="5_8tawa"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mhd46"]
 

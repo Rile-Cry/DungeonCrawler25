@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://bfu7foy1mo23j"]
+
+[ext_resource type="Script" path="res://scenes/mini_map.gd" id="1_iv8wv"]
+[ext_resource type="TileSet" uid="uid://cd2nlxc42ylkj" path="res://assets/tiles/map_cells.tres" id="2_77rj5"]
+[ext_resource type="Script" path="res://scenes/tile_map.gd" id="3_dvlj3"]
+[ext_resource type="Texture2D" uid="uid://ck5j71u645tqi" path="res://assets/tiles/textures/Material_004_albedo.png" id="4_n8qy0"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kvuet"]
+texture = ExtResource("4_n8qy0")
+texture_region_size = Vector2i(32, 32)
+0:0/size_in_atlas = Vector2i(4, 4)
+0:0/0 = 0
+0:0/0/modulate = Color(0.286275, 0.494118, 0.439216, 0.560784)
+
+[sub_resource type="TileSet" id="TileSet_trtic"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_kvuet")
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("astar_map", "map", "map_screen")]
+script = ExtResource("1_iv8wv")
+astar_map = NodePath("")
+map = NodePath("")
+map_screen = NodePath("")
+
+[node name="game_map" type="TileMap" parent="."]
+tile_set = ExtResource("2_77rj5")
+rendering_quadrant_size = 32
+format = 2
+layer_0/name = "grid_map_layer"
+script = ExtResource("3_dvlj3")
+
+[node name="path" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_trtic")
+rendering_quadrant_size = 32
+format = 2
+layer_0/name = "map"

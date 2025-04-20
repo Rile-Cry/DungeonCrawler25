@@ -4,12 +4,12 @@
 [ext_resource type="Script" uid="uid://q6dwvy4wu8p" path="res://gameplay/components/health_component.gd" id="2_bj7e2"]
 [ext_resource type="PackedScene" uid="uid://ur4x8bblrfh5" path="res://scenes/entities/player/walker_bot.tscn" id="3_8akj5"]
 [ext_resource type="Script" uid="uid://c7g1criqmwxaa" path="res://gameplay/states/player_states/turning_state.gd" id="5_bjvvg"]
-[ext_resource type="Script" path="res://gameplay/states/player_states/aim_state.gd" id="7_bj7e2"]
+[ext_resource type="Script" uid="uid://djqtuy5olyei2" path="res://gameplay/states/player_states/aim_state.gd" id="7_bj7e2"]
 [ext_resource type="Script" uid="uid://rjtvlthl4kw1" path="res://gameplay/states/player_states/idle_state.gd" id="8_1murt"]
 [ext_resource type="Texture2D" uid="uid://bsanrt76dqash" path="res://assets/images/muzzle_fire.png" id="8_5sj0x"]
 [ext_resource type="Script" uid="uid://cw8m3meedjdjq" path="res://gameplay/states/player_states/moving_state.gd" id="9_5sj0x"]
 
-[node name="Player" type="Node3D" node_paths=PackedStringArray("hsm", "idle_state", "moving_state", "turning_state", "aim_state", "bot", "anim_player", "gun_ray")]
+[node name="Player" type="Node3D" node_paths=PackedStringArray("hsm", "idle_state", "moving_state", "turning_state", "aim_state", "bot", "anim_player", "gun_ray", "wall_ray")]
 script = ExtResource("1_635qg")
 hsm = NodePath("LimboHSM")
 idle_state = NodePath("LimboHSM/IdleState")
@@ -18,7 +18,8 @@ turning_state = NodePath("LimboHSM/TurningState")
 aim_state = NodePath("LimboHSM/AimState")
 bot = NodePath("WalkerBot")
 anim_player = NodePath("WalkerBot/AnimationPlayer")
-gun_ray = NodePath("RayCast3D")
+gun_ray = NodePath("GunCast")
+wall_ray = NodePath("WallCast")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("2_bj7e2")
@@ -108,9 +109,13 @@ transform = Transform3D(1, -5.44276e-12, 1.2264e-11, 1.07292e-11, 1, 8.9705e-06,
 [node name="Cube_004" parent="WalkerBot/metarig/Skeleton3D" index="14"]
 transform = Transform3D(1, -4.34158e-15, -5.82645e-13, 4.34115e-15, 1, -5.09317e-11, 5.82645e-13, 5.09317e-11, 1, -2.33856e-14, 3.57628e-07, 7.45058e-09)
 
-[node name="RayCast3D" type="RayCast3D" parent="."]
+[node name="GunCast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 target_position = Vector3(0, 0, -5)
+
+[node name="WallCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+target_position = Vector3(0, 0, -1)
 
 [node name="LimboHSM" type="LimboHSM" parent="."]
 

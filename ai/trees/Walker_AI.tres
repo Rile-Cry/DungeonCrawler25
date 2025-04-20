@@ -1,10 +1,10 @@
 [gd_resource type="BehaviorTree" load_steps=50 format=3 uid="uid://c00xr2o8jwmcn"]
 
 [ext_resource type="Script" uid="uid://dflkrw6mr2t5u" path="res://ai/tasks/path_scan.gd" id="1_jikak"]
-[ext_resource type="Script" uid="uid://dbj68cpquhak7" path="res://ai/tasks/drop_in.gd" id="1_otxdf"]
-[ext_resource type="Script" uid="uid://cjrvjggxwhcxk" path="res://ai/tasks/target_player.gd" id="1_wjqib"]
-[ext_resource type="Script" uid="uid://nojxgxbvoiiw" path="res://ai/tasks/move.gd" id="2_xd8ps"]
-[ext_resource type="Script" uid="uid://cpjj1o51nr6jc" path="res://ai/tasks/pathfind.gd" id="4_wjqib"]
+[ext_resource type="Script" path="res://ai/tasks/drop_in.gd" id="1_otxdf"]
+[ext_resource type="Script" path="res://ai/tasks/target_player.gd" id="1_wjqib"]
+[ext_resource type="Script" path="res://ai/tasks/turn.gd" id="2_xd8ps"]
+[ext_resource type="Script" path="res://ai/tasks/advance.gd" id="4_wjqib"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vb233"]
 var/forward_path_check/name = &"forward_path_check"
@@ -80,8 +80,6 @@ children = [SubResource("BTAction_jikak")]
 
 [sub_resource type="BTCondition" id="BTCondition_wjqib"]
 script = ExtResource("4_wjqib")
-player_var = &"player"
-path_map = &"path_map"
 
 [sub_resource type="BTCooldown" id="BTCooldown_otxdf"]
 duration = 8.0
