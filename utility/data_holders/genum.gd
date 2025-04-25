@@ -18,7 +18,3 @@ enum DungeonRoomType {
 enum DungeonTileType {
 	EMPTY
 }
-
-enum DungeonTileType {
-	EMPTY
-}

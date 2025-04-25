@@ -1,4 +1,4 @@
-extends TileMap
+extends TileMapLayer
 
 
 func get_line(start: Vector2i, end: Vector2i) -> Array:

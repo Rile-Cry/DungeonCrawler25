@@ -1,24 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://d1xg47mwvifgq"]
+[gd_scene load_steps=6 format=3 uid="uid://d1xg47mwvifgq"]
 
 [ext_resource type="Script" uid="uid://cqgodvllic4t4" path="res://TEST_SCENES/bot.gd" id="1_lckyo"]
 [ext_resource type="BehaviorTree" uid="uid://c00xr2o8jwmcn" path="res://ai/trees/Walker_AI.tres" id="2_lckyo"]
 [ext_resource type="PackedScene" uid="uid://kb8ukdv50gqr" path="res://assets/models/enemies/enemy_bot.tscn" id="2_n18ty"]
-[ext_resource type="Script" uid="uid://dyyhxxmge0mji" path="res://TEST_SCENES/camera_3d.gd" id="3_b5eeu"]
-[ext_resource type="Shader" uid="uid://cqg8eank0t6ok" path="res://assets/shaders/ps_one.gdshader" id="5_8bj0o"]
-[ext_resource type="Script" uid="uid://b7w7350b465rq" path="res://TEST_SCENES/2d_path_map.gd" id="5_8tawa"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mhd46"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vb233"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tgl1r"]
-shader = ExtResource("5_8bj0o")
-shader_parameter/enabled = true
-shader_parameter/dithering = true
-shader_parameter/colors = 12
-shader_parameter/dither_size = 5
-
-[sub_resource type="Theme" id="Theme_n18ty"]
 
 [node name="Bot" type="CharacterBody3D" node_paths=PackedStringArray("ray_box")]
 disable_mode = 2
@@ -50,49 +38,46 @@ bones/22/scale = Vector3(1, 1, 0.999999)
 bones/23/rotation = Quaternion(-0.75004, 2.89178e-08, 1.46045e-07, 0.661393)
 
 [node name="Cube_039" parent="WalkerBot/metarig/Skeleton3D" index="0"]
-transform = Transform3D(0.99985, 4.00158e-05, 0.0173374, -0.0121612, 0.714339, 0.699694, -0.0123567, -0.699799, 0.714232, 0.000557482, 0.516341, 1.21879)
+transform = Transform3D(0.99985, 4.00158e-05, 0.0173374, -0.0121612, 0.71434, 0.699693, -0.0123568, -0.699799, 0.714233, 0.000557423, 0.51634, 1.21879)
 
 [node name="Cube_036" parent="WalkerBot/metarig/Skeleton3D" index="1"]
-transform = Transform3D(0.999849, 4.00157e-05, 0.0173373, -0.0121612, 0.714339, 0.699694, -0.0123567, -0.699799, 0.714232, 0.000557542, 0.516341, 1.21879)
+transform = Transform3D(0.999849, 4.00158e-05, 0.0173373, -0.0121612, 0.714339, 0.699694, -0.0123567, -0.699799, 0.714232, 0.000557482, 0.516341, 1.21879)
 
 [node name="Cube_018" parent="WalkerBot/metarig/Skeleton3D" index="2"]
-transform = Transform3D(0.99985, 4.0012e-05, 0.0173373, -0.0121612, 0.714339, 0.699694, -0.0123567, -0.6998, 0.714232, 0.000557363, 0.516341, 1.21879)
+transform = Transform3D(0.99985, 4.0012e-05, 0.0173373, -0.0121612, 0.714339, 0.699694, -0.0123567, -0.6998, 0.714232, 0.000557303, 0.516342, 1.21879)
 
 [node name="Cube_031" parent="WalkerBot/metarig/Skeleton3D" index="3"]
-transform = Transform3D(0.999985, -0.000162739, 0.00546814, 0.00546561, -0.0128124, -0.999903, 0.000232783, 0.999918, -0.0128114, 0.000434041, 1.58518, -1.35311)
+transform = Transform3D(0.999985, -0.000162739, 0.00546814, 0.00546561, -0.0128124, -0.999903, 0.000232783, 0.999918, -0.0128114, 0.000433981, 1.58518, -1.35311)
 
 [node name="Cube_017" parent="WalkerBot/metarig/Skeleton3D" index="4"]
-transform = Transform3D(0.999985, -0.000167587, 0.00546172, 0.00450126, 0.591936, -0.805973, -0.00309792, 0.805985, 0.591928, 0.000443816, 0.676956, -1.40659)
+transform = Transform3D(0.999985, -0.000167587, 0.00546172, 0.00450126, 0.591936, -0.805973, -0.00309792, 0.805985, 0.591928, 0.000443816, 0.676957, -1.40659)
 
 [node name="Cube_006" parent="WalkerBot/metarig/Skeleton3D" index="5"]
-transform = Transform3D(0.99985, 1.57015e-10, 0.0173286, -1.50976e-10, 1, -4.07454e-10, -0.0173286, 4.07454e-10, 0.99985, 0.000627327, 0, -5.4501e-06)
+transform = Transform3D(0.99985, 1.57015e-10, 0.0173286, -1.50067e-10, 1, -4.65661e-10, -0.0173286, 4.65661e-10, 0.99985, 0.000627327, 3.57628e-07, -5.42775e-06)
 
 [node name="Cube_022" parent="WalkerBot/metarig/Skeleton3D" index="6"]
-transform = Transform3D(1, 2.61909e-08, 1.29571e-08, -2.86894e-08, 0.964282, 0.264826, -5.57175e-09, -0.264828, 0.964302, -5.96046e-08, 0.0225616, 0.446556)
+transform = Transform3D(1, 2.61911e-08, 1.29561e-08, -2.86895e-08, 0.964282, 0.264826, -5.57162e-09, -0.264828, 0.964303, -5.96046e-08, 0.0225617, 0.446556)
 
 [node name="Cube_027" parent="WalkerBot/metarig/Skeleton3D" index="7"]
-transform = Transform3D(1, 2.56093e-08, 1.46222e-08, -2.86668e-08, 0.727623, 0.685953, 6.9145e-09, -0.685971, 0.727642, -2.98023e-08, 0.160446, 0.394873)
+transform = Transform3D(1, 2.561e-08, 1.46216e-08, -2.8667e-08, 0.727623, 0.685953, 6.91462e-09, -0.685973, 0.727643, -2.98023e-08, 0.160446, 0.394874)
 
 [node name="Cube_020" parent="WalkerBot/metarig/Skeleton3D" index="8"]
-transform = Transform3D(1, 2.55977e-08, 1.46281e-08, -2.86624e-08, 0.727623, 0.685952, 6.90234e-09, -0.685971, 0.727642, 0, 0.160446, 0.394873)
+transform = Transform3D(1, 2.55984e-08, 1.46273e-08, -2.86625e-08, 0.727623, 0.685953, 6.90247e-09, -0.685972, 0.727643, 0, 0.160446, 0.394874)
 
 [node name="Cube_013" parent="WalkerBot/metarig/Skeleton3D" index="9"]
-transform = Transform3D(1, -1.58633e-08, -1.61441e-09, 1.58525e-08, 0.978386, 0.206783, -1.71414e-09, -0.206788, 0.978387, 2.98023e-08, 0.0222628, 0.188195)
+transform = Transform3D(1, -1.58631e-08, -1.61543e-09, 1.58525e-08, 0.978386, 0.206783, -1.71401e-09, -0.206788, 0.978389, 2.98023e-08, 0.0222628, 0.188195)
 
 [node name="Cube_021" parent="WalkerBot/metarig/Skeleton3D" index="10"]
-transform = Transform3D(1, 5.00668e-08, 1.68e-09, -4.92941e-08, 0.977518, 0.210826, 8.92687e-09, -0.210827, 0.977534, 0, -0.0962643, -0.0617092)
+transform = Transform3D(1, 5.00669e-08, 1.67944e-09, -4.92941e-08, 0.977518, 0.210826, 8.92744e-09, -0.210827, 0.977534, 0, -0.0962639, -0.0617092)
 
 [node name="Cube_026" parent="WalkerBot/metarig/Skeleton3D" index="11"]
-transform = Transform3D(1, 5.00677e-08, 1.68106e-09, -4.92951e-08, 0.977518, 0.210826, 8.92597e-09, -0.210827, 0.977534, 8.9407e-08, -0.0962641, -0.0617093)
+transform = Transform3D(1, 5.00678e-08, 1.6805e-09, -4.92951e-08, 0.977518, 0.210826, 8.92654e-09, -0.210827, 0.977534, 8.9407e-08, -0.0962637, -0.0617093)
 
 [node name="Cube_019" parent="WalkerBot/metarig/Skeleton3D" index="12"]
-transform = Transform3D(1, 5.00923e-08, 1.6896e-09, -4.9321e-08, 0.977518, 0.210825, 8.9228e-09, -0.210826, 0.977534, 0, -0.0962641, -0.0617093)
+transform = Transform3D(1, 5.00924e-08, 1.68902e-09, -4.9321e-08, 0.977518, 0.210825, 8.92337e-09, -0.210826, 0.977534, 0, -0.0962637, -0.0617093)
 
 [node name="Cube_010" parent="WalkerBot/metarig/Skeleton3D" index="13"]
-transform = Transform3D(1, -6.11328e-08, 1.4521e-08, 6.18283e-08, 0.916105, -0.400924, 1.12221e-08, 0.400952, 0.916108, 5.96046e-08, 0.0714882, -0.366461)
-
-[node name="Cube_004" parent="WalkerBot/metarig/Skeleton3D" index="14"]
-transform = Transform3D(1, -4.34635e-15, 0, 4.34635e-15, 1, 0, 0, 0, 1, -2.06925e-15, 0, -1.49012e-08)
+transform = Transform3D(1, -6.11331e-08, 1.45204e-08, 6.18283e-08, 0.916105, -0.400924, 1.12227e-08, 0.400952, 0.916108, 5.96046e-08, 0.0714886, -0.366461)
 
 [node name="RayDar" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
@@ -130,87 +115,6 @@ collide_with_areas = true
 [node name="BTPlayer" type="BTPlayer" parent="."]
 behavior_tree = ExtResource("2_lckyo")
 blackboard_plan = SubResource("BlackboardPlan_vb233")
-
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("bot", "facing", "current_dir", "bot_rotation", "bot_g_rotation", "bot_l_rotation", "sub_v_port")]
-transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 2, 3.92638, 0)
-current = true
-script = ExtResource("3_b5eeu")
-bot = NodePath("..")
-facing = NodePath("CanvasLayer/Control/VBoxContainer/Facing")
-current_dir = NodePath("CanvasLayer/Control/VBoxContainer/current_dir")
-bot_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot_rotation")
-bot_g_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot _g_rot")
-bot_l_rotation = NodePath("CanvasLayer/Control/VBoxContainer/bot_l_rot")
-sub_v_port = NodePath("SubViewportContainer/2D PathMap")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
-layer = 2
-follow_viewport_enabled = true
-
-[node name="Control" type="Control" parent="Camera3D/CanvasLayer"]
-material = SubResource("ShaderMaterial_tgl1r")
-custom_minimum_size = Vector2(300, 90)
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/CanvasLayer/Control"]
-visible = false
-custom_minimum_size = Vector2(0, 16)
-layout_mode = 0
-offset_right = 638.0
-offset_bottom = 132.0
-
-[node name="Facing" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
-custom_minimum_size = Vector2(400, 25)
-layout_mode = 2
-theme = SubResource("Theme_n18ty")
-theme_override_font_sizes/normal_font_size = 16
-
-[node name="current_dir" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
-custom_minimum_size = Vector2(400, 25)
-layout_mode = 2
-theme = SubResource("Theme_n18ty")
-theme_override_font_sizes/normal_font_size = 16
-
-[node name="bot_rotation" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
-custom_minimum_size = Vector2(400, 25)
-layout_mode = 2
-theme = SubResource("Theme_n18ty")
-theme_override_font_sizes/normal_font_size = 16
-
-[node name="bot _g_rot" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
-custom_minimum_size = Vector2(400, 25)
-layout_mode = 2
-theme = SubResource("Theme_n18ty")
-theme_override_font_sizes/normal_font_size = 16
-
-[node name="bot_l_rot" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
-custom_minimum_size = Vector2(400, 25)
-layout_mode = 2
-theme = SubResource("Theme_n18ty")
-theme_override_font_sizes/normal_font_size = 16
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Camera3D"]
-visible = false
-offset_top = 434.0
-offset_right = 128.0
-offset_bottom = 562.0
-scale = Vector2(1.67884, 1.67884)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="2D PathMap" type="SubViewport" parent="Camera3D/SubViewportContainer"]
-handle_input_locally = false
-snap_2d_transforms_to_pixel = true
-snap_2d_vertices_to_pixel = true
-size = Vector2i(128, 128)
-render_target_update_mode = 0
-script = ExtResource("5_8tawa")
 
 [node name="OmniLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 3.63313, 2.16287)

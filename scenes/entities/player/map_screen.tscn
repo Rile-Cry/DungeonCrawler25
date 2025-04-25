@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://bbslrfwuhtl82"]
+
+[ext_resource type="Script" uid="uid://b5i482rlkalhs" path="res://scenes/mini_map.gd" id="1_hr7fi"]
+[ext_resource type="Texture2D" uid="uid://ck5j71u645tqi" path="res://assets/tiles/textures/Material_004_albedo.png" id="2_ju60d"]
+[ext_resource type="Texture2D" uid="uid://cpj2a1eky7eok" path="res://assets/tiles/textures/beton2_002_albedo.png" id="3_gup6u"]
+[ext_resource type="Script" uid="uid://b1gxjhvvbndgy" path="res://scenes/tile_map.gd" id="4_max25"]
+[ext_resource type="FontFile" uid="uid://d3x5d24v5bq0f" path="res://assets/fonts/m5x7.ttf" id="5_o0opb"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_dinhu"]
+viewport_path = NodePath("PlayerScene/MapScreen/SubViewport")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kvuet"]
+texture = ExtResource("2_ju60d")
+texture_region_size = Vector2i(32, 32)
+0:0/size_in_atlas = Vector2i(4, 4)
+0:0/0 = 0
+0:0/0/custom_data_0 = "floor"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_trtic"]
+texture = ExtResource("3_gup6u")
+texture_region_size = Vector2i(32, 32)
+0:0/size_in_atlas = Vector2i(8, 8)
+0:0/0 = 0
+0:0/0/custom_data_0 = "wall"
+
+[sub_resource type="TileSet" id="TileSet_dinhu"]
+tile_size = Vector2i(32, 32)
+custom_data_layer_0/name = "tile_type"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_kvuet")
+sources/1 = SubResource("TileSetAtlasSource_trtic")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dinhu"]
+texture = ExtResource("2_ju60d")
+texture_region_size = Vector2i(32, 32)
+0:0/size_in_atlas = Vector2i(4, 4)
+0:0/0 = 0
+0:0/0/modulate = Color(0.286275, 0.509804, 0.658824, 0.866667)
+
+[sub_resource type="TileSet" id="TileSet_kvuet"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_dinhu")
+
+[node name="MapScreen" type="Sprite3D"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0)
+texture = SubResource("ViewportTexture_dinhu")
+region_enabled = true
+region_rect = Rect2(0, 0, 45, 56)
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(45, 56)
+
+[node name="Node2D" type="Node2D" parent="SubViewport" node_paths=PackedStringArray("game_map", "path", "map_screen")]
+script = ExtResource("1_hr7fi")
+game_map = NodePath("game_map")
+path = NodePath("path")
+map_screen = NodePath("../..")
+
+[node name="game_map" type="TileMapLayer" parent="SubViewport/Node2D"]
+tile_set = SubResource("TileSet_dinhu")
+rendering_quadrant_size = 32
+script = ExtResource("4_max25")
+
+[node name="path" type="TileMapLayer" parent="SubViewport/Node2D"]
+tile_set = SubResource("TileSet_kvuet")
+rendering_quadrant_size = 32
+
+[node name="Label" type="Label" parent="SubViewport"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_o0opb")
+theme_override_font_sizes/font_size = 16
+text = "Room"
